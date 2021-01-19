@@ -1,114 +1,39 @@
-require "reduce"
+require "rubygems"
+require "tmpdir"
 
-desc "Delete _site/"
-task :delete do
-  puts "\## Deleting _site/"
-  status = system("rm -r _site")
-  puts status ? "Success" : "Failed"
+require "bundler/setup"
+require "jekyll"
+
+
+# Change your GitHub reponame
+GITHUB_REPONAME = "emilemathieu/emile.mathieu.github.io"
+
+
+desc "Generate blog files"
+task :generate do
+  Jekyll::Site.new(Jekyll.configuration({
+    "source"      => ".",
+    "destination" => "_site"
+  })).process
 end
 
-desc "Preview _site/"
-task :preview do
-  puts "\n## Opening _site/ in browser"
-  status = system("open http://0.0.0.0:4000/")
-  puts status ? "Success" : "Failed"
-end
 
-# Courtesy of https://github.com/pacbard/blog/blob/master/_rake/minify.rake
-desc "Minify _site/"
-task :minify do
-  puts "\n## Compressing static assets"
-  original = 0.0
-  compressed = 0
-  Dir.glob("_site/**/*.*") do |file|
-    case File.extname(file)
-      when ".css", ".gif", ".html", ".jpg", ".jpeg", ".js", ".png", ".xml"
-        puts "Processing: #{file}"
-        original += File.size(file).to_f
-        min = Reduce.reduce(file)
-        File.open(file, "w") do |f|
-          f.write(min)
-        end
-        compressed += File.size(file)
-      else
-        puts "Skipping: #{file}"
-      end
+desc "Generate and publish blog to gh-pages"
+task :publish => [:generate] do
+  Dir.mktmpdir do |tmp|
+    cp_r "_site/.", tmp
+
+    pwd = Dir.pwd
+    Dir.chdir tmp
+
+    system "git init"
+    system "git add ."
+    system "git co -b gh-pages"
+    message = "Site updated at #{Time.now.utc}"
+    system "git commit -m #{message.inspect}"
+    system "git remote add origin git@github.com:#{GITHUB_REPONAME}.git"
+    system "git push origin gh-pages --force"
+
+    Dir.chdir pwd
   end
-  # puts "Total compression %0.2f\%" % (((original-compressed)/original)*100)
-end
-
-desc "Recompile Sass"
-task :recompile_sass do
-  puts "\n## Forcing Sass to recompile"
-  status = system("touch -m assets/css/main.scss")
-  puts status ? "Success" : "Failed"
-end
-
-namespace :build do
-  desc "Build _site/ for development"
-  task :dev => :recompile_sass do
-    puts "\n##  Starting Sass and Jekyll"
-    pids = [
-      spawn("sass --watch assets/css/main.scss:assets/css/main.css --sourcemap=none"),
-      spawn("jekyll serve -w")
-    ]
-
-    trap "INT" do
-      Process.kill "INT", *pids
-      exit 1
-    end
-
-    loop do
-      sleep 1
-    end
-  end
-
-  desc "Build _site/ for production"
-  task :pro => :recompile_sass do
-    # puts "\n## Compiling Sass"
-    # status = system("sass --style compressed assets/css/main.scss:assets/css/main.css --sourcemap=none")
-    # puts status ? "Success" : "Failed"
-    puts "\n## Building Jekyll to _site/"
-    # status = system("jekyll build")
-    status = system("bundle exec jekyll build")
-    puts status ? "Success" : "Failed"
-    Rake::Task["minify"].invoke
-  end
-end
-
-desc "Commit _site/"
-task :commit do
-  puts "\n## Staging modified files"
-  status = system("git add -A")
-  puts status ? "Success" : "Failed"
-  puts "\n## Committing a site build at #{Time.now.utc}"
-  message = "Build site at #{Time.now.utc}"
-  status = system("git commit -m \"#{message}\"")
-  puts status ? "Success" : "Failed"
-  puts "\n## Pushing commits to remote"
-  status = system("git push origin master")
-  puts status ? "Success" : "Failed"
-end
-
-desc "Deploy _site/ to gh-pages branch"
-task :deploy do
-  puts "\n## Deleting gh-pages branch"
-  status = system("git branch -D gh-pages")
-  puts status ? "Success" : "Failed"
-  puts "\n## Creating new gh-pages branch and switching to it"
-  status = system("git checkout -b gh-pages")
-  puts status ? "Success" : "Failed"
-  puts "\n## Forcing the _site subdirectory to be project root"
-  status = system("git filter-branch --subdirectory-filter _site/ -f")
-  puts status ? "Success" : "Failed"
-  puts "\n## Switching back to master branch"
-  status = system("git checkout master")
-  puts status ? "Success" : "Failed"
-  puts "\n## Pushing all branches to origin"
-  status = system("git push --all origin")
-  puts status ? "Success" : "Failed"
-end
-
-desc "Commit and deploy _site/"
-task :commit_deploy => [:commit, :deploy] do
 end
