@@ -65,9 +65,9 @@ namespace :build do
 
   desc "Build _site/ for production"
   task :pro => :recompile_sass do
-    puts "\n## Compiling Sass"
-    status = system("sass --style compressed assets/css/main.scss:assets/css/main.css --sourcemap=none")
-    puts status ? "Success" : "Failed"
+    # puts "\n## Compiling Sass"
+    # status = system("sass --style compressed assets/css/main.scss:assets/css/main.css --sourcemap=none")
+    # puts status ? "Success" : "Failed"
     puts "\n## Building Jekyll to _site/"
     # status = system("jekyll build")
     status = system("bundle exec jekyll build")
