@@ -1,0 +1,97 @@
+---
+---
+{% for author in entry.author_array %}
+{% assign initials = author.first |initials %}
+{% assign a = site.people | where:"bib_first", initials | where: "bib_last", author.last | first %}
+{% assign link = a.url %}
+{% if link%}
+{% if entry.exclude_group_member %}
+{% if !(author.last.match(entry.exclude_group_member))%}<a href="{{ link }}" class="author">{% endif %}
+    {% else %}<a href="{{ link }}" class="author">
+        {% endif %}
+        {% endif %}
+        {{initials}} {{author.last}}
+        {% if link %}
+        {% if entry.exclude_group_member %}
+        {% if !(author.last.match(entry.exclude_group_member))%}</a>{% endif %}
+    {% else %}</a>
+{% endif %}
+{% endif %},
+{% endfor %}
+{{ reference }}
+
+<br />
+
+<div id="{{key | md5}}-supplementary">
+
+    {% if entry.abstract %}
+    <button onclick="$('#{{key | md5}}-abstract').toggle();$('#{{key | md5}}-bibtex').hide();">Abstract</button>
+    {% endif %}
+
+    <button onclick="$('#{{key | md5}}-bibtex').toggle();$('#{{key | md5}}-abstract').hide();">BibTeX</button>
+
+    {% if entry.arxiv %}
+    <form method="get" action="{{entry.arxiv}}">
+        <button type="submit">arXiv</button>
+    </form>
+    {% endif %}
+
+    {% if entry.pdf %}
+    <form method="get" action="{{entry.pdf}}">
+        <button type="submit">PDF</button>
+    </form>
+    {% endif %}
+
+    {% if entry.url %}
+    <form method="get" action="{{entry.url}}">
+        <button type="submit">URL</button>
+    </form>
+    {% endif %}
+
+    {% if entry.supplement %}
+    <form method="get" action="{{entry.supplement}}">
+        <button type="submit">Supplement</button>
+    </form>
+    {% endif %}
+
+    {% if entry.slides %}
+    <form method="get" action="{{entry.slides}}">
+        <button type="submit">Slides</button>
+    </form>
+    {% endif %}
+
+    {% if entry.video %}
+    <form method="get" action="{{entry.video}}">
+        <button type="submit">Video</button>
+    </form>
+    {% endif %}
+
+    {% if entry.software %}
+    <form method="get" action="{{entry.software}}">
+        <button type="submit">Software</button>
+    </form>
+    {% endif %}
+
+    {% if entry.data %}
+    <form method="get" action="{{entry.data}}">
+        <button type="submit">Data</button>
+    </form>
+    {% endif %}
+
+    {% if entry.poster %}
+    <form method="get" action="{{entry.poster}}">
+        <button type="submit">Poster</button>
+    </form>
+    {% endif %}
+
+    {% if entry.abstract %}
+    <div id="{{key | md5}}-abstract" style="display:none;">
+        <div class="abstract">{{entry.abstract}}</div>
+    </div>
+    {% endif %}
+
+    <div id="{{key | md5}}-bibtex" style="display:none;">
+        <pre>{{entry.bibtex}}</pre>
+    </div>
+
+</div>

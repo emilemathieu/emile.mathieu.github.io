@@ -1,0 +1,75 @@
+--
+---
+References
+==========
+@incollection{mathieu2019Riemannian,
+  abstract  = {Normalizing flows have shown great promise for modelling flexible probability distributions in a computationally tractable way. However, whilst data is often naturally described on Riemannian manifolds such as spheres, torii, and hyperbolic spaces, most normalizing flows implicitly assume a flat geometry, making them either misspecified or ill-suited in these situations. To overcome this problem, we introduce Riemannian continuous normalizing flows, a model which admits the parametrization of flexible probability measures on smooth manifolds by defining flows as the solution to ordinary differential equations. We show that this approach can lead to substantial improvements on both synthetic and real-world data when compared to standard flows or previously introduced projected flows.},
+  title     = {Riemannian Continuous Normalizing Flows},
+  author    = {Mathieu, Emile and Nickel, Maximilian},
+  booktitle = {Advances in Neural Information Processing Systems 33},
+  year      = {2019},
+  publisher = {Curran Associates, Inc.},
+  pdf       = {https://papers.nips.cc/paper/2020/file/1aa3d9c6ce672447e1e5d0f1b5207e85-Paper.pdf},
+  arxiv     = {https://arxiv.org/abs/2006.10605},
+  slides    = {https://docs.google.com/presentation/d/1hohrMP5R6avL0ZWfLw6RAAWdOkaOYKPKNHfR1-ih2XU/edit?usp=sharing}
+}
+
+@incollection{mathieu2019Continuous,
+  abstract  = {The Variational Auto-Encoder (VAE) is a popular method for learning a generative model and embeddings of the data. Many real datasets are hierarchically structured. However, traditional VAEs map data in a Euclidean latent space which cannot efficiently embed tree-like structures. Hyperbolic spaces with negative curvature can. We therefore endow VAEs with a Poincaré ball model of hyperbolic geometry as a latent space and rigorously derive the necessary methods to work with two main Gaussian generalisations on that space. We empirically show better generalisation to unseen data than the Euclidean counterpart, and can qualitatively and quantitatively better recover hierarchical structures.},
+  title     = {Continuous Hierarchical Representations with Poincar\'{e} Variational Auto-Encoders},
+  author    = {Mathieu, Emile and Le Lan, Charline and Maddison, Chris J. and Tomioka, Ryota and Teh, Yee Whye},
+  booktitle = {Advances in Neural Information Processing Systems 32},
+  pages     = {12565--12576},
+  year      = {2019},
+  publisher = {Curran Associates, Inc.},
+  url       = {http://papers.neurips.cc/paper/9420-continuous-hierarchical-representations-with-poincare-variational-auto-encoders},
+  pdf       = {http://papers.nips.cc/paper/9420-continuous-hierarchical-representations-with-poincare-variational-auto-encoders.pdf},
+  arxiv     = {https://arxiv.org/abs/1901.06033},
+  software  = {https://github.com/emilemathieu/pvae},
+  slides    = {https://docs.google.com/presentation/d/1OExRgKIpFnwAJnvLRwF8aQNpgSS3WAavLd0sVkZJtj4/edit?usp=sharing}
+}
+
+@inproceedings{mathieu2019Disentaling,
+  abstract  = {We develop a generalisation of disentanglement in VAEs---decomposition of the latent representation---characterising it as the fulfilment of two factors: a) the latent encodings of the data having an appropriate level of overlap, and b) the aggregate encoding of the data conforming to a desired structure, represented through the prior. Decomposition permits disentanglement, i.e. explicit independence between latents, as a special case, but also allows for a much richer class of properties to be imposed on the learnt representation, such as sparsity, clustering, independent subspaces, or even intricate hierarchical dependency relationships. We show that the β-VAE varies from the standard VAE predominantly in its control of latent overlap and that for the standard choice of an isotropic Gaussian prior, its objective is invariant to rotations of the latent representation. Viewed from the decomposition perspective, breaking this invariance with simple manipulations of the prior can yield better disentanglement with little or no detriment to reconstructions. We further demonstrate how other choices of prior can assist in producing different decompositions and introduce an alternative training objective that allows the control of both decomposition factors in a principled manner.},
+  title     = {Disentangling Disentanglement in Variational Autoencoders},
+  author    = {Mathieu, Emile and Rainforth, Tom and Siddharth, N and Teh, Yee Whye},
+  booktitle = {Proceedings of the 36th International Conference on Machine Learning},
+  pages     = {4402--4412},
+  year      = 2019,
+  volume    = 97,
+  series    = {Proceedings of Machine Learning Research},
+  address   = {Long Beach, California, USA},
+  month     = {09--15 Jun},
+  publisher = {PMLR},
+  project   = {bigbayes},
+  pdf       = {http://proceedings.mlr.press/v97/mathieu19a/mathieu19a.pdf},
+  url       = {http://proceedings.mlr.press/v97/mathieu19a.html},
+  arxiv     = {https://arxiv.org/abs/1812.02833},
+  software  = {https://github.com/iffsid/disentangling-disentanglement},
+  slides    = {https://emilemathieu.github.io/PDFs/disentanglement.pdf}
+}
+
+@inproceedings{BloemReddy2018Sampling,
+  abstract = {Empirical evidence suggests that heavy-tailed degree distributions occurring in many real networks are well-approximated by power laws with exponents η that may take values either less than and greater than two. Models based on various forms of exchangeability are able to capture power laws with $\eta<2$, and admit tractable inference algorithms; we draw on previous results to show that $\eta>2$ cannot be generated by the forms of exchangeability used in existing random graph models. Preferential attachment models generate power law exponents greater than two, but have been of limited use as statistical models due to the inherent difficulty of performing inference in non-exchangeable models. Motivated by this gap, we design and implement inference algorithms for a recently proposed class of models that generates $\eta$ of all possible values. We show that although they are not exchangeable, these models have probabilistic structure amenable to inference. Our methods make a large class of previously intractable models useful for statistical inference.},
+  author    = {Bloem-Reddy, Benjamin and Foster, Adam and Mathieu, Emile and Teh, Yee Whye},
+  booktitle = {Conference on Uncertainty in Artificial Intelligence},
+  pdf       = {http://auai.org/uai2018/proceedings/papers/185.pdf},
+  title     = {Sampling and Inference for Beta Neutral-to-the-Left Models of Sparse Networks},
+  arxiv     = {https://arxiv.org/abs/1807.03113},
+  pdf       = {http://auai.org/uai2018/proceedings/papers/185.pdf},
+  slides    = {https://github.com/ae-foster/bntl_presentation/blob/master/main.pdf},
+  software  = {https://github.com/emilemathieu/NTL.jl},
+  project   = {bigbayes},
+  month     = {August},
+  year      = {2018}
+}
+
+@article{bloemreddy2017Sampling,
+  abstract = {We consider the problem of sampling a sequence from a discrete random probability measure (RPM) with countable support, under (probabilistic) constraints of finite memory and computation. A canonical example is sampling from the Dirichlet Process, which can be accomplished using its stick-breaking representation and lazy initialization of its atoms. We show that efficiently lazy initialization is possible if and only if a size-biased representation of the discrete RPM is used. For models constructed from such discrete RPMs, we consider the implications for generic particle-based inference methods in probabilistic programming systems. To demonstrate, we implement SMC for Normalized Inverse Gaussian Process mixture models in Turing.},
+  title    = {Sampling and inference for discrete random probability measures in probabilistic programs},
+  author   = {Bloem-Reddy, Benjamin and Mathieu, Emile and Foster, Adam and Rainforth, Tom and Ge, Hong and Lomelí, María and Ghahramani, Zoubin and Teh, Yee Whye},
+  journal  = {NIPS Workshop on Advances in Approximate Bayesian Inference},
+  url      = {http://approximateinference.org/2017/accepted/Bloem-ReddyEtAl2017.pdf},
+  project  = {bigbayes},
+  year     = {2017}
+}
