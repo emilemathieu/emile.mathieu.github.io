@@ -3,8 +3,8 @@ layout: archive
 title: "Address"
 permalink: /contact/
 author_profile: true
-# redirect_from:
-#   - /contact
+redirect_from:
+  - /contact
 ---
 
 Department of Statistics \\
