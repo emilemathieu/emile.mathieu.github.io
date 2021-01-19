@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: "CV"
+title: "Curriculum Vitae"
 permalink: /cv/
 author_profile: true
 redirect_from:
@@ -9,51 +9,64 @@ redirect_from:
 
 {% include base_path %}
 
+Last updated on 2021-01-19
+
+[For the pdf version of my curriculum vitae please click here]({{site.baseurl}}/files/CV.pdf).
+
 Education
 ======
-* B.S. in GitHub, GitHub University, 2012
-* M.S. in Jekyll, GitHub University, 2014
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
+* 2017 - Now: PhD in Machine Learning with Prof. Yee Whye TEH at University of Oxford, Department of Statistics.
+* 2016 - 2017: MSc (II) in Machine Learning & Computer Vision (MVA) at Ecole Normale Supérieure Paris-Saclay, Paris, passed with honours, Gpa: 4/4.
+* 2014 - 2015: MSc (I) in Mathematics & Computer Science at École des Ponts ParisTech, Paris, Gpa: 3.94/4.
+* 2013 - 2014: BSc in Science (Mathematics, Physics and Computer Science), at École des Ponts ParisTech, Paris, Gpa: 3.86/4.
+* 2011 - 2013: Preparatory classes in Mathematics and Physics, PSI*, Nantes.
+* 2011: Baccalauréat (French secondary school diploma), Nantes, Science major, Mathematics option, passed with honours.
 
 Work experience
 ======
-* Summer 2015: Research Assistant
-  * Github University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
 
-* Fall 2015: Research Assistant
-  * Github University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
+* Autumn 2019: Research Intern
+  * Facebook Artificial Intelligence Research, New York.
+  * Worked on extending normalizing flows to manifolds (1), with climate science application.
+  * Supervisor: Maximilian Nickel.
   
-Skills
-======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+* Summer 2017: Research Intern
+  * Department of Statistics, University of Oxford.
+  * Studied sampling methods for discrete random probability measures in probabilistic programs. Contributed to the open source probabilistic program Turing.jl.
+  * Supervisor: Yee Whye Teh.
+  
+* Summer 2016: Machine Learning Intern
+  * Criteo Lab, Paris
+  * In the context of online auctions, improved predictive bidding models accuracy in the presence of perturbative and periodical events such as sales.
+  * Supervisor: Regis Vert / Patrick de Pas.
+  
+* Autumn 2015: Software Engineer Intern
+  * BAM Lab, Paris.
+  * Worked as a full-stack developer, using leading technologies to develop mobile and web-
+site applications, and their associated backend services.
 
-Publications
-======
-  <ul>{% for post in site.publications %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
+* Summer 2014: Data Scientist Intern
+  * IFSTTAR Research Institute, Paris.
+  * Applied unsupervised probabilistic models such as LDA, to transportation’s data in order to better understand commuters behaviour.
+  * Supervisor: Etienne Come.
   
-Talks
+Languages
 ======
-  <ul>{% for post in site.talks %}
-    {% include archive-single-talk-cv.html %}
-  {% endfor %}</ul>
-  
-Teaching
+* French: Mothertongue
+* English: Fluent (TOEIC: 930, TOEFL: 103, GRE VR: 157)
+* Spanish: Moderate
+
+Computer Skills
 ======
-  <ul>{% for post in site.teaching %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Service and leadership
+* Advanced Knowledge: Python, PyTorch, Bash, LATEX
+* Intermediate Knowledge: Julia, TensorFlow, Matlab, C++, JavaScript
+
+Workshop Co-Organization
 ======
-* Currently signed in to 43 different slack teams
+2020: [Differential Geometry meets Deep Learning](https://sites.google.com/view/diffgeo4dl/) at Neurips
+
+Reviewing
+======
+2020: Neurips, AABI
+2019: ICML, Neurips
+2018: AABI, BDL
