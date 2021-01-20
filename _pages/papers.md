@@ -5,7 +5,7 @@ permalink: /papers/
 author_profile: true
 ---
 
-This page contains all my publications; for more details, see my <a href="https://scholar.google.com/citations?user=g9BjTqgAAAAJ">Google Scholar </a> profile.
+This page contains all my publications; for more details, see my <a href="https://scholar.google.com/citations?user=g9BjTqgAAAAJ">Google Scholar</a> profile.
 
 <!-- {% include base_path %} -->
 

@@ -84,6 +84,12 @@
     </form>
     {% endif %}
 
+    {% if entry.oral %}
+    <form method="get" action="{{entry.oral}}">
+        <button style="color:red" type="submit">Oral Presentation</button>
+    </form>
+    {% endif %}
+
     {% if entry.abstract %}
     <div id="{{key | md5}}-abstract" style="display:none;">
         <div class="abstract">{{entry.abstract}}</div>

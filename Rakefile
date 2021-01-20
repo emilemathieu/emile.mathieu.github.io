@@ -9,6 +9,14 @@ require "jekyll"
 GITHUB_REPONAME = "emilemathieu/emile.mathieu.github.io"
 
 
+desc "Build with livereload"
+task :build do
+  puts "\n## Serving with jekyll"
+  status = system("bundle exec jekyll serve --livereload")
+  puts status ? "Success" : "Failed"
+end
+
+
 desc "Generate blog files"
 task :generate do
   Jekyll::Site.new(Jekyll.configuration({

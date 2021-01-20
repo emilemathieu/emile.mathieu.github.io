@@ -122,6 +122,9 @@
       </else>
     </choose>
   </macro>
+  <macro name="oral">
+    <text variable="oral" font-color="red"/>
+  </macro>
   <macro name="publisher">
     <choose>
       <if type=" bill book chapter graphic legal_case legislation motion_picture paper-conference song" match="any">
@@ -239,6 +242,7 @@
           <else-if type="paper-conference">
             <group delimiter=", ">
               <text macro="title"/>
+              <text macro="oral"/>
               <text macro="event"/>
               <text macro="issued"/>
               <text macro="locators"/>

@@ -2,7 +2,7 @@
 ---
 References
 ==========
-@incollection{mathieu2019Riemannian,
+@inproceedings{mathieu2019Riemannian,
   abstract  = {Normalizing flows have shown great promise for modelling flexible probability distributions in a computationally tractable way. However, whilst data is often naturally described on Riemannian manifolds such as spheres, torii, and hyperbolic spaces, most normalizing flows implicitly assume a flat geometry, making them either misspecified or ill-suited in these situations. To overcome this problem, we introduce Riemannian continuous normalizing flows, a model which admits the parametrization of flexible probability measures on smooth manifolds by defining flows as the solution to ordinary differential equations. We show that this approach can lead to substantial improvements on both synthetic and real-world data when compared to standard flows or previously introduced projected flows.},
   title     = {Riemannian Continuous Normalizing Flows},
   author    = {Mathieu, Emile and Nickel, Maximilian},
@@ -11,10 +11,10 @@ References
   publisher = {Curran Associates, Inc.},
   pdf       = {https://papers.nips.cc/paper/2020/file/1aa3d9c6ce672447e1e5d0f1b5207e85-Paper.pdf},
   arxiv     = {https://arxiv.org/abs/2006.10605},
-  slides    = {https://docs.google.com/presentation/d/1hohrMP5R6avL0ZWfLw6RAAWdOkaOYKPKNHfR1-ih2XU/edit?usp=sharing}
+  slides    = {https://docs.google.com/presentation/d/1hohrMP5R6avL0ZWfLw6RAAWdOkaOYKPKNHfR1-ih2XU/edit?usp=sharing},
 }
 
-@incollection{mathieu2019Continuous,
+@inproceedings{mathieu2019Continuous,
   abstract  = {The Variational Auto-Encoder (VAE) is a popular method for learning a generative model and embeddings of the data. Many real datasets are hierarchically structured. However, traditional VAEs map data in a Euclidean latent space which cannot efficiently embed tree-like structures. Hyperbolic spaces with negative curvature can. We therefore endow VAEs with a Poincaré ball model of hyperbolic geometry as a latent space and rigorously derive the necessary methods to work with two main Gaussian generalisations on that space. We empirically show better generalisation to unseen data than the Euclidean counterpart, and can qualitatively and quantitatively better recover hierarchical structures.},
   title     = {Continuous Hierarchical Representations with Poincar\'{e} Variational Auto-Encoders},
   author    = {Mathieu, Emile and Le Lan, Charline and Maddison, Chris J. and Tomioka, Ryota and Teh, Yee Whye},
@@ -26,7 +26,7 @@ References
   pdf       = {http://papers.nips.cc/paper/9420-continuous-hierarchical-representations-with-poincare-variational-auto-encoders.pdf},
   arxiv     = {https://arxiv.org/abs/1901.06033},
   software  = {https://github.com/emilemathieu/pvae},
-  slides    = {https://docs.google.com/presentation/d/1OExRgKIpFnwAJnvLRwF8aQNpgSS3WAavLd0sVkZJtj4/edit?usp=sharing}
+  slides    = {https://docs.google.com/presentation/d/1OExRgKIpFnwAJnvLRwF8aQNpgSS3WAavLd0sVkZJtj4/edit?usp=sharing},
 }
 
 @inproceedings{mathieu2019Disentaling,
@@ -46,7 +46,8 @@ References
   url       = {http://proceedings.mlr.press/v97/mathieu19a.html},
   arxiv     = {https://arxiv.org/abs/1812.02833},
   software  = {https://github.com/iffsid/disentangling-disentanglement},
-  slides    = {https://emilemathieu.github.io/PDFs/disentanglement.pdf}
+  slides    = {https://emilemathieu.github.io/PDFs/disentanglement.pdf},
+  oral      = {https://icml.cc/media/Slides/icml/2019/halla(12-11-00)-12-11-35-4811-disentangling_d.pdf},
 }
 
 @inproceedings{BloemReddy2018Sampling,
@@ -61,15 +62,16 @@ References
   software  = {https://github.com/emilemathieu/NTL.jl},
   project   = {bigbayes},
   month     = {August},
-  year      = {2018}
+  year      = {2018},
+  oral      = {https://www.youtube.com/watch?v=0PlIFXBpIgU},
 }
 
-@article{bloemreddy2017Sampling,
+@inproceedings{bloemreddy2017Sampling,
   abstract = {We consider the problem of sampling a sequence from a discrete random probability measure (RPM) with countable support, under (probabilistic) constraints of finite memory and computation. A canonical example is sampling from the Dirichlet Process, which can be accomplished using its stick-breaking representation and lazy initialization of its atoms. We show that efficiently lazy initialization is possible if and only if a size-biased representation of the discrete RPM is used. For models constructed from such discrete RPMs, we consider the implications for generic particle-based inference methods in probabilistic programming systems. To demonstrate, we implement SMC for Normalized Inverse Gaussian Process mixture models in Turing.},
   title    = {Sampling and inference for discrete random probability measures in probabilistic programs},
   author   = {Bloem-Reddy, Benjamin and Mathieu, Emile and Foster, Adam and Rainforth, Tom and Ge, Hong and Lomelí, María and Ghahramani, Zoubin and Teh, Yee Whye},
   journal  = {NIPS Workshop on Advances in Approximate Bayesian Inference},
   url      = {http://approximateinference.org/2017/accepted/Bloem-ReddyEtAl2017.pdf},
   project  = {bigbayes},
-  year     = {2017}
+  year     = {2017},
 }
