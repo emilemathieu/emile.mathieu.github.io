@@ -15,5 +15,5 @@ United Kingdom.
 
 Email
 ======
-- emile.mathieu (at) stats.ox.ac.uk
-- emile.mathieu (at) gmail.com
+- emile (dot) mathieu (at) stats (dot) ox (dot) ac (dot) uk
+- emile (dot) mathieu (at) gmail (dot) com
