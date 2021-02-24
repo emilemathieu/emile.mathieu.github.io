@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://emilemathieu.fr/feed.xml" rel="self" type="application/atom+xml" /><link href="https://emilemathieu.fr/" rel="alternate" type="text/html" /><updated>2021-02-24T18:27:27+00:00</updated><id>https://emilemathieu.fr/feed.xml</id><title type="html">Emile Mathieu</title><subtitle>personal description</subtitle><author><name>Emile Mathieu</name></author><entry><title type="html">A Minimal Deep Learning Library Implementation In Python</title><link href="https://emilemathieu.fr/posts/2018/08/cnn/" rel="alternate" type="text/html" title="A Minimal Deep Learning Library Implementation In Python" /><published>2018-08-10T00:00:00+01:00</published><updated>2018-08-10T00:00:00+01:00</updated><id>https://emilemathieu.fr/posts/2018/08/cnn</id><content type="html" xml:base="https://emilemathieu.fr/posts/2018/08/cnn/">&lt;p style=&quot;display:none&quot;&gt;
+$
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\svert}{~|~}
+\newcommand{\f}{\mathbf{f}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\z}{\mathbf{z}}
+\newcommand{\w}{\mathbf{w}}
+\newcommand{\W}{\mathbf{W}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\m}{\mathbf{m}}
+\newcommand{\ls}{\mathbf{l}}
+\newcommand{\bL}{\mathbf{L}}
+\newcommand{\X}{\mathbf{X}}
+\newcommand{\Y}{\mathbf{Y}}
+\newcommand{\p}{\mathbf{p}}
+\newcommand{\bepsilon}{\text{$\epsilon$}}
+\newcommand{\bgamma}{\text{$\gamma$}}
+\newcommand{\K}{\mathbf{K}}
+\newcommand{\diag}{\text{diag}}
+\newcommand{\argmin}{\text{argmin}}
+$
+&lt;/p&gt;
+&lt;p&gt;This tutorial introduces the main blocks needed to build a &lt;a href=&quot;https://github.com/emilemathieu/blog_cnn&quot;&gt;deep learning library&lt;/a&gt; in a few lines of Python. You'll learn how to build your (very) light-weight version of &lt;a href=&quot;https://pytorch.org&quot;&gt;PyTorch&lt;/a&gt;!
+  &lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h2&gt;Convolutional Neural Networks&lt;/h2&gt;
+&lt;p&gt;
+We'll assume familiarity with Convolutional Neural Network (CNN) models. If not I strongly recommend you to first read &lt;a href=&quot;http://cs231n.github.io/convolutional-networks/&quot;&gt;Stanford's CS231n course on CNNs&lt;/a&gt;.
+    
+    &lt;div style=&quot;margin-top: -20px; margin-bottom: 20px; max-width: 80%; display: block; margin-left: auto; margin-right: auto&quot; class=&quot;image captioned row 100% special&quot;&gt;
+        &lt;div class=&quot;12u 12u$(medium)&quot;&gt;&lt;span class=&quot;image captioned fit&quot;&gt;&lt;img src=&quot;/images/blog/cnn/cnn.png&quot; alt=&quot;&quot; /&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;12u&quot;&gt;&lt;h5&gt;Architecture of a CNN. — Source: &lt;a href=&quot;https://www.mathworks.com/videos/introduction-to-deep-learning-what-are-convolutional-neural-networks--1489512765771.html&quot;&gt; https://www.mathworks.com.&lt;/a&gt;&lt;/h5&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2&gt;The &lt;i&gt;module&lt;/i&gt; paradigm&lt;/h2&gt;
+&lt;p&gt;The module inheritance paradigm underlies the widely used &lt;a href=&quot;https://pytorch.org&quot;&gt;PyTorch&lt;/a&gt;, &lt;a href=&quot;https://github.com/deepmind/sonnet&quot;&gt;Sonnet&lt;/a&gt; and &lt;a href=&quot;https://gluon.mxnet.io&quot;&gt;Gluon&lt;/a&gt; deep learning libraries.
+The idea is to build neural networks in a hierarchical and factored way by leveraging the modularity of so-called &lt;i&gt;modules&lt;/i&gt;.
+&lt;br /&gt;
+From a mathematical perspective a &lt;i&gt;module&lt;/i&gt; is a differentiable function. It can  have parameters to be learned and then needs to also be differentiable with respect to these parameters.
+From a programmatic perspective, it is a class implementing a &lt;b&gt;forward&lt;/b&gt; method $\mathbf{y} = f(\mathbf{x})$ (input $\mathbf{x}$, output $\mathbf{y}$) and a &lt;b&gt;backward&lt;/b&gt; method $g(\mathbf{x}, \nabla\mathbf{y}) = \nabla_{\mathbf{x}} \ f(\mathbf{x}) \times \nabla \mathbf{y}$. If it has parameters $\theta$ that we wish to learn, it additionally needs these parameters as &lt;b&gt;attributes&lt;/b&gt;, a &lt;b&gt;step&lt;/b&gt; method that performs an optimisation step on $\theta$ when called, and the &lt;b&gt;backward&lt;/b&gt; method to also compute and save $\nabla_{\theta} f_\theta(\mathbf{x}) \times \nabla\mathbf{y}$ before returning $g(\mathbf{x}, \nabla\mathbf{y})$.
+Below is the abstract &lt;b&gt;Module&lt;/b&gt; class that will be inherited.
+&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/emilemathieu/f640d0a7d368196f39f25202b1f95d6d.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;This design enables to build small blocks of layers than can then be assembled to build bigger blocks and so on. Factoring code in this manner reduces the number of lines needed to defined a model and eases experimentation of new architectures.
+&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h3&gt;Layers&lt;/h3&gt;
+&lt;p&gt;
+Layers are the basic functions composing neural networks.
+They will be implemented by inheriting the abstract &lt;b&gt;Module&lt;/b&gt; class.
+For instance, a &lt;i&gt;linear layer&lt;/i&gt; is parametrised by a weight $\mathbf{A}$ and a bias $\mathbf{b}$, and defined by the &lt;b&gt;forward&lt;/b&gt; function $f(\mathbf{x}) = \mathbf{A} \mathbf{x} + \mathbf{b}$, the &lt;b&gt;backward&lt;/b&gt; function $g(\mathbf{x}, \nabla\mathbf{y}) = \nabla_{\mathbf{x}} \ f(\mathbf{x}) \times \nabla \mathbf{y} = \mathbf{A} \nabla \mathbf{y}$ and its weight and bias partial derivatives 
+$\nabla_{\mathbf{b}} \ f_{\mathbf{A},\mathbf{b}}(\mathbf{x}) \times \nabla\mathbf{y} = 1^T \nabla\mathbf{y}$
+and $\nabla_{\mathbf{A}} \ f_{\mathbf{A},\mathbf{b}}(\mathbf{x}) \times \nabla\mathbf{y} = \nabla\mathbf{y}^T \mathbf{x}$.
+&lt;/p&gt;
+&lt;script src=&quot;https://gist.github.com/emilemathieu/87938f3e9e9acd00372dc7224a832574.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h3&gt;Training&lt;/h3&gt;
+&lt;p&gt;
+Neural networks can be trained via &lt;i&gt;back-propagation&lt;/i&gt; which is the application of the &lt;a href=&quot;https://en.wikipedia.org/wiki/Chain_rule&quot;&gt;&lt;i&gt;chain rule&lt;/i&gt;&lt;/a&gt; to the loss's gradient up to the neural net's layers parameters.
+For easiness, we restrict ourselves to neural nets that can be represented as a composition of functions $f(\mathbf{x}) = f_n \circ \dots \circ f_1(\mathbf{x})$. It enables to represent explicitly the dependency between layers via a list. Some networks like &lt;a href=&quot;https://arxiv.org/abs/1512.03385&quot;&gt;ResNets&lt;/a&gt; are excluded by this assumption since they need the network to be represented as a DAG, but it's all right for our purpose.
+&lt;br /&gt;&lt;br /&gt;
+Such composition of functions are implemented via a &lt;b&gt;Sequential&lt;/b&gt; class constructed with a list of sub-modules. Then its &lt;b&gt;forward&lt;/b&gt; method calls each sub-module's &lt;b&gt;forward&lt;/b&gt; method, its &lt;b&gt;backward&lt;/b&gt; calls in &lt;i&gt;reverse&lt;/i&gt; order each sub-module's &lt;b&gt;backward&lt;/b&gt; method, and its &lt;b&gt;step&lt;/b&gt; method calls each trainable (having parameters to learn) sub-module's &lt;b&gt;step&lt;/b&gt; method.
+&lt;/p&gt;
+&lt;script src=&quot;https://gist.github.com/emilemathieu/97dc38a4c0f8a4d66393c19d73df24b2.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;
+    The network is trained so as to minimise a user-defined loss $L(\mathbf{X}, \mathbf{y}^{\text{true}}, \theta) = \sum_{i} l(f_{\theta}(\mathbf{x}_i), y{\text{true}}_i)$. The &lt;i&gt;cross entropy&lt;/i&gt; is for instance widely used for classification tasks.
+&lt;/p&gt;
+&lt;script src=&quot;https://gist.github.com/emilemathieu/1873f05800df51927a1d7e4dbb330b32.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;
+Hence, each trainable layer gets its parameters partial derivative automatically computed by backpropagating the loss's gradient through the sequence of layers:
+\begin{equation}
+\forall i=n,\dots,1  \quad  \nabla_{\theta_i} L(\mathbf{X}, \mathbf{y}, \theta) = \nabla_{\theta_i} f_i(\mathbf{X}) \times \left( g_{i+1} \circ \dots \circ g_n \left(\nabla_{X} L \left(\mathbf{X}, \mathbf{y}, \theta\right) \right) \right)
+\end{equation}
+&lt;/p&gt;
+
+&lt;h2&gt;Optimisation&lt;/h2&gt;
+&lt;p&gt;
+The most straightforward optimisation scheme for neural networks is (momentum) stochastic gradient descent which applies the following update on the parameters $\theta$
+
+\begin{equation}
+v_t = \gamma v_{t-1} + \eta \nabla_\theta J( \theta) \\  
+\theta = \theta - v_t
+\end{equation}
+with $\eta$ being the learning rate and $\gamma$ the momentum coefficient.
+&lt;b&gt;SGD&lt;/b&gt; inherits from &lt;b&gt;Optmizer&lt;/b&gt; as implemented below.
+&lt;/p&gt;
+&lt;script src=&quot;https://gist.github.com/emilemathieu/46fb760060ea4b28bad28f3035c26a21.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;
+I also implemented &lt;a href=&quot;https://arxiv.org/abs/1412.6980&quot;&gt;Adam&lt;/a&gt; and &lt;a href=&quot;https://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf&quot;&gt;RMSProp&lt;/a&gt; in &lt;a href=&quot;https://github.com/emilemathieu/blog_cnn/blob/master/mllib/optim.py&quot;&gt;optim.py&lt;/a&gt;. For a nice review of gradient-based optimisation schemes used for deep neural nets training, check &lt;a href=&quot;http://ruder.io/optimizing-gradient-descent/&quot;&gt;S. Ruder's blog post&lt;/a&gt;.
+
+&lt;br /&gt;&lt;br /&gt;
+An optimisation step can then be performed by calling
+&lt;script src=&quot;https://gist.github.com/emilemathieu/8525404649bb6c786243225d4f66c77d.js&quot;&gt;&lt;/script&gt;
+&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h2&gt;Demonstration on MNIST&lt;/h2&gt;
+&lt;p&gt;
+Let's demonstrate our library on the &lt;a href=&quot;http://yann.lecun.com/exdb/mnist/&quot;&gt;MNIST classification task dataset&lt;/a&gt;.
+We define our CNN by inheriting the &lt;b&gt;Module&lt;/b&gt; class, thus implementing the &lt;b&gt;forward&lt;/b&gt;, &lt;b&gt;backward&lt;/b&gt; and &lt;b&gt;step&lt;/b&gt; methods as shown below.
+
+&lt;/p&gt;
+&lt;script src=&quot;https://gist.github.com/emilemathieu/acb3dc9a0125bd9e30b69ff857cc3eec.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;
+    Clone the &lt;a href=&quot;https://github.com/emilemathieu/blog_cnn&quot;&gt;associated Github repository&lt;/a&gt; and then run the &lt;a href=&quot;https://github.com/emilemathieu/blog_cnn/blob/master/example.py&quot;&gt;example script&lt;/a&gt; so as to load the MNIST dataset, instantiate the CNN model, train it by backpropagation and eventually predict a digit's label as plotted below.
+
+&lt;div class=&quot;image captioned row 100% special&quot;&gt;
+        &lt;div style=&quot;float: left; width: 50%; padding: 5px&quot;&gt;&lt;img style=&quot;width:100%&quot; src=&quot;/images/blog/cnn/digit.png&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;
+        &lt;div style=&quot;float: left; width: 50%; padding: 5px&quot;&gt;&lt;img style=&quot;width:100%&quot; src=&quot;/images/blog/cnn/pred.png&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;
+        &lt;div class=&quot;12u&quot;&gt;&lt;h5&gt;(Left) Example of mnist digit. (Right) Label prediction of our trained CNN.&lt;/h5&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h3&gt;What's missing towards a complete library ?&lt;/h3&gt;
+&lt;p&gt;
+We've built in this tutorial the minimum blocks towards a working deep learning library, yet some parts are still missing to have a complete library.
+First, an &lt;b&gt;automatic-differentation&lt;/b&gt; (autodiff) library avoid having to explicitly manipulate the gradients. Indeed, while being (imperatively) defined, the neural net is then implicitly represented as a DAG, allowing gradients to be automatically computed in a backward manner via the &lt;i&gt;chain rule&lt;/i&gt;.
+Moreover, a &lt;b&gt;data-loader&lt;/b&gt; wrapper is really useful so as to ease downloading, loading and preprocessing datasets. More layers and optimisation schemes should also be added.
+&lt;b&gt;GPU support&lt;/b&gt; is also really important for large scale training.
+&lt;/p&gt;
+
+&lt;h3&gt;Acknowledgments&lt;/h3&gt;
+&lt;p&gt;I’m grateful to Thomas Pesneau and Yuan Zhou for their comments.&lt;/p&gt;
+
+&lt;div id=&quot;disqus_thread&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'http://emilemathieu.fr';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'cnn'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://http-emilemathieu-fr.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+&lt;/script&gt;</content><author><name>Emile Mathieu</name></author><category term="Deep Learning" /><category term="Library" /><category term="PyTorch" /><summary type="html">$ \newcommand{\R}{\mathbb{R}} \newcommand{\N}{\mathcal{N}} \newcommand{\svert}{~|~} \newcommand{\f}{\mathbf{f}} \newcommand{\x}{\mathbf{x}} \newcommand{\y}{\mathbf{y}} \newcommand{\z}{\mathbf{z}} \newcommand{\w}{\mathbf{w}} \newcommand{\W}{\mathbf{W}} \newcommand{\ba}{\mathbf{a}} \newcommand{\m}{\mathbf{m}} \newcommand{\ls}{\mathbf{l}} \newcommand{\bL}{\mathbf{L}} \newcommand{\X}{\mathbf{X}} \newcommand{\Y}{\mathbf{Y}} \newcommand{\p}{\mathbf{p}} \newcommand{\bepsilon}{\text{$\epsilon$}} \newcommand{\bgamma}{\text{$\gamma$}} \newcommand{\K}{\mathbf{K}} \newcommand{\diag}{\text{diag}} \newcommand{\argmin}{\text{argmin}} $ This tutorial introduces the main blocks needed to build a deep learning library in a few lines of Python. You'll learn how to build your (very) light-weight version of PyTorch!</summary></entry><entry><title type="html">An Efficient Soft-Margin Kernel SVM Implementation In Python</title><link href="https://emilemathieu.fr/posts/2018/08/svm/" rel="alternate" type="text/html" title="An Efficient Soft-Margin Kernel SVM Implementation In Python" /><published>2018-08-08T00:00:00+01:00</published><updated>2018-08-08T00:00:00+01:00</updated><id>https://emilemathieu.fr/posts/2018/08/svm</id><content type="html" xml:base="https://emilemathieu.fr/posts/2018/08/svm/">&lt;p style=&quot;display:none&quot;&gt;
+$
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\svert}{~|~}
+\newcommand{\f}{\mathbf{f}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\z}{\mathbf{z}}
+\newcommand{\w}{\mathbf{w}}
+\newcommand{\W}{\mathbf{W}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\m}{\mathbf{m}}
+\newcommand{\ls}{\mathbf{l}}
+\newcommand{\bL}{\mathbf{L}}
+\newcommand{\X}{\mathbf{X}}
+\newcommand{\Y}{\mathbf{Y}}
+\newcommand{\p}{\mathbf{p}}
+\newcommand{\bepsilon}{\text{$\epsilon$}}
+\newcommand{\bgamma}{\text{$\gamma$}}
+\newcommand{\K}{\mathbf{K}}
+\newcommand{\diag}{\text{diag}}
+\newcommand{\argmin}{\text{argmin}}
+$
+&lt;/p&gt;
+&lt;p&gt;This short tutorial aims at introducing support vector machine (SVM) methods from its mathematical formulation along with an efficient implementation in a few lines of Python! Do play with the full code hosted on &lt;a href=&quot;https://github.com/emilemathieu/ImageClassificationChallenge/tree/master/code/mllib/svm&quot; target=&quot;_blank&quot;&gt;my github page&lt;/a&gt;. I strongly recommend reading &lt;a href=&quot;http://leon.bottou.org/publications/pdf/lin-2006.pdf&quot; target=&quot;_blank&quot;&gt;Support Vector Machine Solvers&lt;/a&gt; (from L. Bottou &amp;amp; C-J. Lin) for an in-depth cover of the topic, along with the &lt;a href=&quot;http://www.csie.ntu.edu.tw/~cjlin/papers/libsvm.pdf&quot; target=&quot;_blank&quot;&gt;LIBSVM&lt;/a&gt; library. The present post naturally follows this &lt;a href=&quot;http://tullo.ch/articles/svm-py/&quot; target=&quot;_blank&quot;&gt;introduction on SVMs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Support Vector Machines - The model&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div&gt;&lt;span class=&quot;image captioned right&quot; style=&quot;max-width: 300px;float: right&quot;&gt;&lt;img src=&quot;/images/blog/svm/optimal-hyperplane.png&quot; alt=&quot;&quot; /&gt;&lt;h5&gt;Figure 1: &lt;i&gt;An optimal hyperplane.&lt;/i&gt;&lt;/h5&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Support_vector_machine&quot; target=&quot;_blank&quot;&gt;Support vector machines&lt;/a&gt; (SVMs) are supervised learning models for classification (or regression) defined by &lt;i&gt;supporting hyperplanes&lt;/i&gt;.
+SVM is one of the most widely used algorithms since it relies on strong theoretical foundations and has good performance in practice.
+&lt;br /&gt;&lt;br /&gt;
+  As illustrated on Figure 1, SVMs represent examples as points in space, mapped so that the examples of the different categories are divided by a clear gap that is as wide as possible. New examples are then mapped into that same space and assigned a category based on which side of the gap they fall.
+&lt;!-- This hyperplane is optimal in the sense that if the data is separable, it is the one with the maximum margin as shown on the Figure 1. --&gt;
+&lt;br /&gt;&lt;br /&gt;
+Let's consider a dataset
+&lt;!-- \begin{equation} --&gt;
+$D = { (\mathbf{x}_{i}, y_{i}), \mathbf{x} \in \mathbb{R}^d, y \in \{ -1, 1 \}}$
+&lt;!-- \end{equation} --&gt;
+, and $\phi$ a feature mapping - a possibly non-linear function used to get features from the datapoints $\{x_i\}$.
+&lt;br /&gt;
+The main idea is to find an hyperplane $\w^*$ separating our dataset and maximising the &lt;i&gt;margin&lt;/i&gt; of this hyperplane:
+&lt;br /&gt;&lt;br /&gt;
+\begin{equation} \label{eq:hard_objective}
+\min _{\w, b} \mathcal{P}(\w, b) = \cfrac{1}{2} \w^2
+  \end{equation}
+  \begin{equation} \label{eq:hard_conditions}
+\text{subject to} \  \forall i \ \ y_i(\w^T \phi(\x_i)+b) \ge 1
+\end{equation}
+The conditions (\ref{eq:hard_conditions}) enforce that datapoints (after being mapped through $\phi$) from the first (respectively second) category lie below (respectively above) the hyperplane $\w^*$, while the objective (\ref{eq:hard_objective}) maximises the &lt;i&gt;margin&lt;/i&gt; (the distance between the hyperplane $\w^*$ and the closest example).
+&lt;/p&gt;
+&lt;h3&gt; Soft margin&lt;/h3&gt;
+&lt;p&gt;
+We implicitly made the assumption that the dataset $D$ was &lt;i&gt;separable&lt;/i&gt;: that there exists an hyperplane $\w^* \in \mathbb{R}^d$ such that all red points  (i.e. $y=-1)$ lie on one side of the hyperplane (i.e. $\w^T \phi(\x_i)+b \le 0$) and blue points (y=$+1)$ lie on the other side of the hyperplane (i.e. $\w^T \phi(\x_i)+b \ge 0$).
+This formulation is called &lt;i&gt;hard margin&lt;/i&gt;, since the margin cannot let some datapoints &lt;i&gt;go through&lt;/i&gt; (all datapoints are well classified).
+&lt;br /&gt;This assumption can be relaxed by introducing positive slack variables $\mathbf{\xi}=(\xi_1, \dots, \xi_n)$
+allowing some examples to violate the margin constraints (\ref{eq:hard_conditions}).
+$\xi_i$ are non-zero only if $\x_i$ sits on the wrong side of the hyperplane, and is equal to the distance between $\x_i$ and the hyperplane $\w$.
+Then an hyperparameter $C$ controls the compromise between large margins and small margin violations.
+&lt;!-- This is formalised as the following constrained optimisation problem: --&gt;
+&lt;/p&gt;
+
+&lt;!-- &lt;h3&gt;Kernel Trick&lt;/h3&gt;
+&lt;p&gt;Although SVMs are linear models, they can perform non-linear classification/regression using the so-called &lt;i&gt;kernel trick&lt;/i&gt;, by implicitly mapping their inputs into high-dimensional feature spaces.&lt;/p&gt; --&gt;
+
+&lt;!-- &lt;h3&gt; Formulation &lt;/h3&gt; --&gt;
+
+&lt;p&gt;
+\begin{equation} \label{eq:hard_primal}
+\min _{\w, b, \mathbf{\xi}} \mathcal{P}(\w, b, \mathbf{\xi}) = \cfrac{1}{2} \w^2 + C \sum_{i=1}^n \xi_i \\
+\text{subject to} \begin{cases} \forall i \quad y_i(\w^T \phi(\x_i)+b) \ge 1 - \xi_i \\ 
+\forall i \quad \xi_i \ge 0 \end{cases}
+\end{equation}
+
+
+
+&lt;/p&gt;
+
+&lt;!-- &lt;code data-gist-id=&quot;https://gist.github.com/emilemathieu/c8873e7a3f1aca7d123bea7bc9305627.js&quot;&gt;&lt;/code&gt; --&gt;
+
+&lt;h2&gt;How to fit the model ?&lt;/h2&gt;
+&lt;p&gt;Once one have such a mathematical representation of the model through an optimisation problem, the next natural question arising is &lt;i&gt; how should we solve this problem (once we know it is well-posed) ?&lt;/i&gt;
+The SVM solution is the optimum of a well defined convex optimisation problem (\ref{eq:hard_primal}).
+Since the optimum does not depend on the manner it has been calculated, the choice of a particular optimisation algorithm can be made on the sole basis of its computational requirements.
+&lt;!-- The Python's method &lt;i&gt;_compute_weights&lt;/i&gt; can therefore be implemented in several ways, and we'll present an efficient implementation. --&gt;
+&lt;/p&gt;
+
+&lt;h3&gt;Dual formulation&lt;/h3&gt;
+
+&lt;p&gt;
+Directly solving (\ref{eq:hard_primal}) is difficult because the constraints are quite complex.
+A classic move is then to simplify this problem via &lt;i&gt;Lagrangian duality&lt;/i&gt; (see &lt;a href=&quot;http://leon.bottou.org/publications/pdf/lin-2006.pdf&quot;&gt;L. Bottou et al&lt;/a&gt; for more details), yielding the &lt;i&gt;dual&lt;/i&gt; optimisation problem:
+
+\begin{equation} \label{eq:soft_dual}
+\max _{\alpha} \mathcal{D}(\alpha) = \sum_{i=1}^n \alpha_i - \cfrac{1}{2} \sum_{i,j=1}^n y_i \alpha_i y_j \alpha_j \mathbf{K}(\x_i, \x_j) \\
+\end{equation}  
+\begin{equation}  \label{eq:soft_dual_cons}
+\text{subject to} \begin{cases} \forall i \quad 0 \le \alpha_i \le C \\
+\sum_i y_i\alpha_i = 0 \end{cases}
+\end{equation} 
+
+with $\{\alpha_i\}_{i=1,\dots,n}$ being the dual coefficients to solve and $\mathbf{K}$ being the kernel associated with $\phi$: $\forall i,j \ \ \mathbf{K}(\x_i, \x_j)=\left&amp;lt; \phi(\x_i) , \phi(\x_j)\right&amp;gt;$. That problem is much easier to solve since the constraints are much simpler.
+Then, the direction $\w^*$ of the optimal hyperplane is recovered from a solution $\alpha^*$ of the dual optimisation problem (\ref{eq:soft_dual}-\ref{eq:soft_dual_cons}) (by forming the Lagragian and taking its minimum w.r.t. $\w$ - which is a strongly convex function):
+\begin{equation}
+\w^* = \sum_{i} \alpha^*_i y_i \phi(\x_i)
+\end{equation}
+
+The optimal hyperplane is therefore a weighted combination over the datapoints with non-zero dual coefficient $\alpha^*_i$. Those datapoints are therefore called &lt;i&gt;support vectors&lt;/i&gt;, hence &lt;i&gt;«support vector machines»&lt;/i&gt;. This property is quite elegant and really useful since in practice only a few $\alpha^*_i$ are non-zeros. Hence, a new datapoint prediction only requires to evaluate:
+
+\begin{equation}
+\text{sign}\left(\w^{*T} \phi(\x)+b\right) = \text{sign}\left(\sum_{i} \alpha^*_i y_i \phi(\x_i)^T\phi(\mathbf{x}) +b\right)
+= \text{sign}\left(\sum_{i} \alpha^*_i y_i \mathbf{K}(\mathbf{x}_i, \mathbf{x}) +b \right)
+\end{equation}
+&lt;/p&gt;
+
+&lt;h3&gt;Quadratic Problem solver&lt;/h3&gt;
+&lt;p&gt;
+The SVM optimisation problem (\ref{eq:soft_dual}) is a Quadratic Problem (QP), a well studied class of optimisation problems for which  good libraries has been developed for.
+This is the approach taken in this &lt;a href=&quot;http://tullo.ch/articles/svm-py/&quot;&gt;intro on SVM&lt;/a&gt;, relying on the Python's quadratic program solver &lt;a href=&quot;http://cvxopt.org&quot;&gt;cvxopt&lt;/a&gt;.
+&lt;br /&gt;
+Yet this approach can be inefficient since such packages were often designed to take advantage of sparsity in the quadratic part of the objective function. Unfortunately, the SVM kernel matrix $\mathbf{K}$ is rarely sparse but sparsity occurs in the &lt;i&gt;solution&lt;/i&gt; of the SVM problem.
+Moreover, the specification of a SVM problem rarely fits in memory and generic optimisation packages sometimes make extra work to locate the optimum with high accuracy which is often useless.
+Let's then described an algorithm tailored to efficiently solve that optimisation problem.
+
+&lt;/p&gt;
+
+&lt;h3&gt;The Sequential Minimal Optimisation (SMO) algorithm&lt;/h3&gt;
+&lt;p&gt;
+One way to avoid the inconveniences above-mentioned is to rely on the decomposition method.
+The idea is to decompose the optimisation problem in a sequence of subproblems where only a subset of coefficients $\alpha_i$, $i \in \mathcal{B}$ needs to be optimised, while leaving the remaining coefficients $\alpha_j$, $j \notin \mathcal{B}$ unchanged:
+
+\begin{equation} \label{eq:smo}
+\max _{\alpha'} \mathcal{D}(\alpha') = \sum_{i=1}^n \alpha'_i - \cfrac{1}{2} \sum_{i,j=1}^n y_i \alpha'_i y_j \alpha'_j \mathbf{K}(\x_i, \x_j) \\
+\text{subject to} \begin{cases} \forall i \notin \mathcal{B}  \quad \alpha'_i=\alpha_i  \\
+\forall i \in \mathcal{B} \quad 0 \le \alpha'_i \le C \\
+\sum_i y_i\alpha'_i = 0 \end{cases}
+\end{equation}
+
+&lt;!-- or equivalently
+
+\begin{equation}
+\max _{\alpha'} \mathcal{D}(\alpha') = \sum_{i=1}^n \alpha'_i - \cfrac{1}{2} \sum_{i,j=1}^n y_i \alpha'_i y_j \alpha'_j \mathbf{K}(\x_i, \x_j) \\
+\text{subject to} \begin{cases} \forall i \notin \mathcal{B}  \quad \alpha'_i=\alpha_i  \\
+\forall i \in \mathcal{B} \quad 0 \le \alpha'_i \le C \\
+\sum_i y_i\alpha'_i = 0 \end{cases}
+\end{equation} --&gt;
+
+One need to decide how to choose the working set $\mathcal{B}$ for each subproblem. The simplest is to always use the smallest possible working set, that is, two elements (such as the &lt;i&gt;maximum violating pair scheme&lt;/i&gt;, which is discussed in Section 7.2 in &lt;a href=&quot;http://leon.bottou.org/publications/pdf/lin-2006.pdf&quot; target=&quot;_blank&quot;&gt;Support Vector Machine Solvers&lt;/a&gt; ). The equality constraint $\sum_i y_i \alpha'_i = 0$ then makes this a &lt;i&gt;one dimensional&lt;/i&gt; optimisation problem.
+
+&lt;br /&gt;&lt;br /&gt;
+&lt;div&gt;&lt;span class=&quot;image captioned right&quot; style=&quot;max-width: 450px;float: right&quot;&gt;&lt;img src=&quot;/images/blog/svm/directon_search.png&quot; alt=&quot;&quot; /&gt;&lt;h5&gt;Figure 2: &lt;i&gt;Direction search - from L. Bottou &amp;amp; C-J. Lin.&lt;/i&gt;&lt;/h5&gt;&lt;/span&gt;&lt;/div&gt;
+The subproblem optimisation can then be achieved by performing successive &lt;i&gt;direction searches&lt;/i&gt; along well chosen successive directions.
+Such a method seeks to maximizes an optimisation problem restricted to the half line ${\mathbf{\alpha} + \lambda \mathbf{u}, \lambda \in \Lambda}$, with $\mathbf{u} = (u_1,\dots,u_n)$ a &lt;i&gt;feasible direction&lt;/i&gt; (i.e. can slightly move the point $\mathbf{\alpha}$ along direction $\mathbf{u}$ without violating the constraints).
+
+&lt;br /&gt;
+The equality constraint (\ref{eq:smo}) restricts $\mathbf{u}$ to the linear subspace $\sum_i y_i u_i = 0$.
+Each subproblem is therefore solved by performing a search along a direction $\mathbf{u}$ containing only two non zero coefficients: ${u}_i = y_i$ and ${u}_j = −y_j$.
+
+&lt;br /&gt;&lt;br /&gt;
+The set $\Lambda$ of all coefficients $\lambda \ge 0$ is defined such that the point $\mathbf{\alpha} + \lambda \mathbf{u}$ satisfies the constraints. Since the feasible polytope is convex and bounded $\Lambda = [0, \lambda^{\max}]$.
+Direction search is expressed by the simple optimisation problem
+\begin{equation}
+\lambda^* =  \arg\max_{\lambda \in \Lambda}{\mathcal{D}(\mathbf{\alpha }+ \lambda \mathbf{u})}
+\end{equation}
+
+Since the dual objective function is quadratic, $\mathcal{D}(\mathbf{\alpha }+ \lambda \mathbf{u})$ is shaped like a parabola. The location of its maximum $\lambda^+$ is easily computed using Newton’s formula:
+
+\begin{equation}
+\lambda^+ = \cfrac{ \partial \mathcal{D}(\mathbf{\alpha }+ \lambda \mathbf{u}) / \partial \lambda \ |_{\lambda=0} } {\partial^2 \mathcal{D}(\mathbf{\alpha }+ \lambda \mathbf{u}) / \partial \lambda^2 \ |_{\lambda=0}} = \cfrac{\mathbf{g}^T \mathbf{u}}{\mathbf{u}^T \mathbf{H} \mathbf{u}}
+\end{equation}
+&lt;/p&gt;
+&lt;p&gt;
+where vector $\mathbf{g}$ and matrix $\mathbf{H}$ are the gradient and the Hessian of the dual objective function $\mathcal{D}(\mathbf{\alpha})$:
+
+\begin{equation}
+g_i  = 1 - y_i \sum_j{y_j \alpha_j K_{ij}} \quad \text{and} \quad H_{ij} = y_i y_j K_{ij}
+\end{equation}
+
+Hence $\lambda^* = \max \left(0, \min \left(\lambda^{\max}, \lambda^+ \right)\right) = \max \left(0, \min \left(\lambda^{\max}, \cfrac{\mathbf{g}^T \mathbf{u}}{\mathbf{u}^T \mathbf{H} \mathbf{u}} \right)\right)$.
+
+&lt;!--  The &lt;i&gt;Modified Gradient Projection&lt;/i&gt; method further restrict the choice of the successive search directions $\mathbf{u}$ to conjugate successive search directions  --&gt;
+
+&lt;!-- &lt;br&gt;&lt;br&gt;
+I won't go into details on the way to select the working sets is the maximum violating pair scheme, which is discussed in Section 7.2 in &lt;a href=&quot;http://leon.bottou.org/publications/pdf/lin-2006.pdf&quot; target=&quot;_blank&quot; &gt;Support Vector Machine Solvers&lt;/a&gt; (from L. Bottou &amp; C. Lin). --&gt;
+&lt;/p&gt;
+
+&lt;h3&gt;Implementation&lt;/h3&gt;
+
+&lt;p&gt;From a Python’s class point of view, an SVM model can be represented via the following attributes and methods:
+&lt;script src=&quot;https://gist.github.com/emilemathieu/c8873e7a3f1aca7d123bea7bc9305627.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Then the &lt;b&gt;_compute_weights&lt;/b&gt; method is implemented using the SMO algorithm described above:
+&lt;script src=&quot;https://gist.github.com/emilemathieu/10f0b4a596c5ad571d8356f426b128a9.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;!-- kernel trick; different kernels can be used such as the classic ones below --&gt;
+&lt;!-- &lt;script src=&quot;https://gist.github.com/emilemathieu/026df8545b880e7814ddc081a55a0e70.js&quot;&gt;&lt;/script&gt; --&gt;
+
+&lt;!-- &lt;h3&gt;Demonstration&lt;/h3&gt; --&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h2&gt;Demonstration&lt;/h2&gt;
+&lt;p&gt;
+We demonstrate this algorithm on a synthetic dataset drawn from a two dimensional standard normal distribution.
+Running the &lt;a href=&quot;https://github.com/emilemathieu/blog_svm/blob/master/code/example.py&quot;&gt;example script&lt;/a&gt; will generate the synthetic dataset, then train a kernel SVM via the SMO algorithm and eventually plot the predicted categories.
+&lt;/p&gt;
+
+&lt;div class=&quot;image captioned row 100% special&quot;&gt;
+        &lt;div class=&quot;6u 6u$(medium)&quot;&gt;&lt;span class=&quot;image captioned fit&quot;&gt;&lt;img src=&quot;/images/blog/svm/plot1.pdf&quot; alt=&quot;&quot; /&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;6u 6u$(medium)&quot;&gt;&lt;span class=&quot;image captioned fit&quot;&gt;&lt;img src=&quot;/images/blog/svm/plot2.pdf&quot; alt=&quot;&quot; /&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;12u&quot;&gt;&lt;h5&gt;Optimal hyperplane with predicted labels for radial basis (left) and linear (right) kernel SVMs.&lt;/h5&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+&lt;p&gt;
+The material and code is available on &lt;a href=&quot;https://github.com/emilemathieu/ImageClassificationChallenge/tree/master/code/mllib/svm&quot; target=&quot;_blank&quot;&gt;my github page&lt;/a&gt;. I hope you enjoyed that tutorial !
+&lt;/p&gt;
+
+&lt;h3&gt;Acknowledgments&lt;/h3&gt;
+&lt;p&gt;I’m grateful to Thomas Pesneau for his comments.&lt;/p&gt;
+
+&lt;div id=&quot;disqus_thread&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'http://emilemathieu.fr';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'svm'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://http-emilemathieu-fr.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+&lt;/script&gt;</content><author><name>Emile Mathieu</name></author><category term="Support Vector Machine" /><category term="Quadratic Problem" /><category term="Sequential Minimal Optimisation" /><summary type="html">$ \newcommand{\R}{\mathbb{R}} \newcommand{\N}{\mathcal{N}} \newcommand{\svert}{~|~} \newcommand{\f}{\mathbf{f}} \newcommand{\x}{\mathbf{x}} \newcommand{\y}{\mathbf{y}} \newcommand{\z}{\mathbf{z}} \newcommand{\w}{\mathbf{w}} \newcommand{\W}{\mathbf{W}} \newcommand{\ba}{\mathbf{a}} \newcommand{\m}{\mathbf{m}} \newcommand{\ls}{\mathbf{l}} \newcommand{\bL}{\mathbf{L}} \newcommand{\X}{\mathbf{X}} \newcommand{\Y}{\mathbf{Y}} \newcommand{\p}{\mathbf{p}} \newcommand{\bepsilon}{\text{$\epsilon$}} \newcommand{\bgamma}{\text{$\gamma$}} \newcommand{\K}{\mathbf{K}} \newcommand{\diag}{\text{diag}} \newcommand{\argmin}{\text{argmin}} $ This short tutorial aims at introducing support vector machine (SVM) methods from its mathematical formulation along with an efficient implementation in a few lines of Python! Do play with the full code hosted on my github page. I strongly recommend reading Support Vector Machine Solvers (from L. Bottou &amp;amp; C-J. Lin) for an in-depth cover of the topic, along with the LIBSVM library. The present post naturally follows this introduction on SVMs.</summary></entry><entry><title type="html">10 Best Beer Gardens In Oxford</title><link href="https://emilemathieu.fr/posts/2018/08/pubs/" rel="alternate" type="text/html" title="10 Best Beer Gardens In Oxford" /><published>2018-08-07T00:00:00+01:00</published><updated>2018-08-07T00:00:00+01:00</updated><id>https://emilemathieu.fr/posts/2018/08/pubs</id><content type="html" xml:base="https://emilemathieu.fr/posts/2018/08/pubs/">&lt;p&gt;If you are passing by Oxford as a tourist, a visiting student or have already been living there for a while, you cannot miss the enthralling excitement happening around the many bars and pubs scattered in the city. There are especially a significant selection of front and back gardens which offer the perfect place to drink a pint or a glass of Pimm's. I hope you'll love my an hand-curated list of the most thrilling beer gardens one can find in &lt;i&gt; The City of Dreaming Spires&lt;/i&gt;!&lt;/p&gt;
+
+&lt;iframe id=&quot;maps&quot; src=&quot;https://www.google.com/maps/d/embed?mid=16rvzahLwsYSgsKvQ9VufC-PeUG-TRRHj&amp;amp;z=13&quot; width=&quot;100%&quot; height=&quot;500em&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;pub&quot;&gt;
+&lt;a class=&quot;publink&quot; id=&quot;51.7504448,-1.3982129&quot; href=&quot;#maps&quot;&gt; &lt;h3 style=&quot;text-align:center&quot;&gt;The Plough - Port Meadow&lt;/h3&gt;&lt;/a&gt;
+&lt;img class=&quot;right&quot; src=&quot;/images/blog/pubs/plough3.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;p&gt;
+Situated north-east of Port Meadow, The Plough is a well-known stopover for people walking or riding through the meadow. One instantaneously feels miles away from Oxford thanks to the greenery and quietness. Definitely a great spot for families seeking a place to eat &amp;amp; drink while leaving the children in the playground.
+The food can be surprisingly good, depending on the (changing) menu.
+&lt;/p&gt;
+&lt;i class=&quot;address&quot;&gt;The Green, Upper Wolvercote, Oxford OX2 8BD. &lt;a href=&quot;theploughoxford.co.uk&quot;&gt;theploughoxford.co.uk.&lt;/a&gt;&lt;/i&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;pub&quot;&gt;
+&lt;a class=&quot;publink&quot; id=&quot;51.76574299999998%2C-1.287199899999905&quot; href=&quot;#maps&quot;&gt; &lt;h3 style=&quot;text-align:center&quot;&gt;The Perch - Port Meadow&lt;/h3&gt;&lt;/a&gt;
+&lt;img class=&quot;left&quot; src=&quot;/images/blog/pubs/perch.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;p&gt;
+The Perch is one of Oxford’s oldest pubs, close to the Isis and overlooking Port Meadow.
+In the summer, their garden is the envy of the whole city, and the 17th century plaster-rubble building with its traditional thatched roof will charm even the most seasoned pub-goers.
+The Perch was even frequented by author Lewis Carroll, where he gave public readings of Alice in Wonderland.
+If you keep walking northward along the Isis, you'll eventually come across the
+&lt;a href=&quot;https://www.thetroutoxford.co.uk/?utm_source=google&amp;amp;utm_medium=organic&amp;amp;utm_campaign=gmb&quot;&gt;Trout Inn&lt;/a&gt;
+and then &lt;a href=&quot;http://www.jacobs-inn.com&quot;&gt;Jacobs Inn&lt;/a&gt; which are worth going due their picturesqueness.
+&lt;/p&gt;
+&lt;i class=&quot;address&quot;&gt;Binsey Ln, Binsey, Oxford OX2 0NG. &lt;a href=&quot;the-perch.co.uk&quot;&gt;the-perch.co.uk.&lt;/a&gt;&lt;/i&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;pub&quot;&gt;
+&lt;a class=&quot;publink&quot; id=&quot;51.76172289999998%2C-1.2678702000000612&quot; href=&quot;#maps&quot;&gt;&lt;h3 style=&quot;text-align:center&quot;&gt;The Victoria - Jericho&lt;/h3&gt;&lt;/a&gt;
+
+&lt;img class=&quot;right&quot; src=&quot;/images/blog/pubs/victoria.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;p&gt;
+Situated in Jericho, The Victoria has a front terrace which is one of the best spot to enjoy a Pimm's till the sunset.
+It is also well known by whisky connoisseurs for having a large choice of spirits.
+The Victoria definitely pays tribute to food lovers and British gastronomy (if such thing exists) since amazing pies are served with classic British chips: I personally recommend the white truffles and spinach one.
+The back garden is also very enjoyable during spring and summer time.
+Beware for those who dislike taxidermy, there is a significant collection of those!
+
+&lt;/p&gt;
+&lt;i class=&quot;address&quot;&gt;90 Walton St, Oxford OX2 6EB. &lt;a href=&quot;victorianpub.co.uk&quot;&gt; victorianpub.co.uk&lt;/a&gt;&lt;/i&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;pub&quot;&gt;
+&lt;a class=&quot;publink&quot; id=&quot;51.75468510000002%2C-1.2529684999999517&quot; href=&quot;#maps&quot;&gt;&lt;h3 style=&quot;text-align:center&quot;&gt;The Turf Tavern - City center&lt;/h3&gt;&lt;/a&gt;
+&lt;img class=&quot;left&quot; src=&quot;/images/blog/pubs/turf1.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;p&gt;
+The Turf Tavern is definitely one of the historic pubs in Oxford, and its well-hidden location makes it even more iconic. Oxford and Brookes Uni students spend lots of time in the three outdoor courtyards (with braziers in winter) enjoying their great choice of drinks.
+It has been frequented by many famous personalities, such as Bill Clinton who infamously &lt;i&gt;did not inhale&lt;/i&gt; marijuana during an event there.
+After exams you may also come across students celebrating by trying to beat the former Australian Prime Minister Bob Hawke at drinking a &lt;a href=&quot;https://en.wikipedia.org/wiki/Yard_of_ale&quot;&gt;Yard of Ale &lt;/a&gt; - who set a Guinness World Record in 1963 by drinking 1.4L in 11s.
+&lt;/p&gt;
+
+&lt;i class=&quot;address&quot;&gt;4-5 Bath Pl, Oxford OX1 3SU. &lt;a href=&quot;https://www.greeneking-pubs.co.uk/pubs/oxfordshire/turf-tavern&quot;&gt;https://www.greeneking-pubs.co.uk.&lt;/a&gt;&lt;/i&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;pub&quot;&gt;
+&lt;a class=&quot;publink&quot; id=&quot;51.75027939999998%2C-1.242595700000038&quot; href=&quot;#maps&quot;&gt;&lt;h3 style=&quot;text-align:center&quot;&gt;Angel &amp;amp; Greyhound - Cowley&lt;/h3&gt;&lt;/a&gt;
+&lt;img class=&quot;right&quot; src=&quot;/images/blog/pubs/angel3.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;p&gt;
+The Angel &amp;amp; Greyhound is situated between St Clement's street and the eponymous meadow. It has a front terrace on the former side and a charming patio garden (with a véranda) on the latter side. A good selection of beers, wine and dishes is offered. It's a great place to play pool and board games with friends.&lt;/p&gt;
+&lt;i class=&quot;address&quot;&gt;30 St Clement's St, Oxford OX4 1AB. &lt;a href=&quot;angelandgreyhound.co.uk&quot;&gt;angelandgreyhound.co.uk&lt;/a&gt;&lt;/i&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;pub&quot;&gt;
+&lt;a class=&quot;publink&quot; id=&quot;51.75047230000002%2C-1.2399765000000116&quot; href=&quot;#maps&quot;&gt;&lt;h3 style=&quot;text-align:center&quot;&gt;Port Mahon - Cowley&lt;/h3&gt;&lt;/a&gt;
+&lt;img class=&quot;left&quot; src=&quot;/images/blog/pubs/portmahon1.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;p&gt;Also situated in St Clement's street, The Port Mahon is a quite quiet pub, unless you happen to go on a Sunday evening during the famous (and hard) pub quizz! It features a back garden including some leather sofas which I believe have been perfectly designed to fling oneself before having drinks and smokes with friends.&lt;/p&gt;
+&lt;i class=&quot;address&quot;&gt;82 St Clement's St, Oxford OX4 1AW. &lt;/i&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;pub&quot;&gt;
+&lt;a class=&quot;publink&quot; id=&quot;51.749364400000005%2C-1.2386989999999969&quot; href=&quot;#maps&quot;&gt;&lt;h3 style=&quot;text-align:center&quot;&gt;The Star - Cowley&lt;/h3&gt;&lt;/a&gt;
+&lt;img class=&quot;right&quot; src=&quot;/images/blog/pubs/star.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;p&gt;A bit hidden on Rectory Rd (just off of Cowley Rd), The Star definitely reflects the spirit of East Oxford people love. The decent sized rear beer garden features proper grass, which makes it a perfect place to spend a summer evening. There is also a generous amount of seating inside and two pool tables.&lt;/p&gt;
+&lt;i class=&quot;address&quot;&gt;21 Rectory Rd, Oxford OX4 1BU. &lt;/i&gt;
+&lt;/div&gt;
+
+&lt;!-- &lt;div class=&quot;pub&quot;&gt;
+&lt;h3 style=&quot;text-align:center&quot;&gt;Arbequina - Cowley&lt;/h3&gt;
+&lt;img class=&quot;left&quot; src=&quot;/images/blog/pubs/turf1.jpg&quot; alt=&quot;&quot;&gt;
+&lt;p&gt;Lovely decoration. Back garden. Amazing choice of coktails.&lt;/p&gt;
+&lt;/div&gt; --&gt;
+
+&lt;div class=&quot;pub&quot;&gt;
+&lt;a class=&quot;publink&quot; id=&quot;51.74724510000001%2C-1.2354860000000372&quot; href=&quot;#maps&quot;&gt;&lt;h3 style=&quot;text-align:center&quot;&gt;Cowley Retreat - Cowley&lt;/h3&gt;&lt;/a&gt;
+&lt;img class=&quot;left&quot; src=&quot;/images/blog/pubs/cowley4.jpeg&quot; alt=&quot;&quot; /&gt;
+&lt;p&gt;In the crux of East Oxford, the Cowley Retreat is the general quarters of many students. How could one shunt its lively back terrace ? Nicely decorated with fairy lights, along with great music, spending the evening there gives you the best odds to spend a cheerful night!&lt;/p&gt;
+&lt;i class=&quot;address&quot;&gt;172 Cowley Rd, Oxford OX4 1UE. &lt;a href=&quot;thecowleyretreat.com&quot;&gt;thecowleyretreat.com&lt;/a&gt;&lt;/i&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;pub&quot;&gt;
+&lt;a class=&quot;publink&quot; id=&quot;51.7428743,-1.236366&quot; href=&quot;#maps&quot;&gt;&lt;h3 style=&quot;text-align:center&quot;&gt;The Rusty Bicycle - Cowley&lt;/h3&gt;&lt;/a&gt;
+&lt;img class=&quot;right&quot; src=&quot;/images/blog/pubs/rusty2.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;p&gt;Refurbished &amp;amp; reinvented in 2009, the Rusty Bicycle is now one of the &lt;i&gt;fer de lance&lt;/i&gt; pubs of East Oxford's spirit. You'll love spending your Sunday mornings in its nice garden, trying each of the breakfast menu item. I personally recommend the &lt;i&gt;mighty veggie&lt;/i&gt; for its amazing cheddar+leer fritters. The front terrace is also perfect to have a pint with friends while enjoying the neighbourhood's atmosphere.
+The founders also refurnished two other pubs: the &lt;a href=&quot;thericketypress.com&quot;&gt;The Rickety Press&lt;/a&gt; in Jericho and &amp;lt;a href&quot;&quot;&amp;gt;The Bottle Of Sauce&amp;lt;/a&amp;gt; in Cheltenham, forming the &lt;a href=&quot;https://dodopubs.com/about-dodo/&quot;&gt;DODO PUB CO&lt;/a&gt;.
+&lt;/p&gt;
+&lt;i class=&quot;address&quot;&gt;28 Magdalen Rd, Oxford OX4 1RB. &lt;a href=&quot;therustybicycle.com.&quot;&gt;therustybicycle.com.&lt;/a&gt;&lt;/i&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;pub&quot;&gt;
+&lt;a class=&quot;publink&quot; id=&quot;51.73078000000002,-1.241484000000014&quot; href=&quot;#maps&quot;&gt;&lt;h3 style=&quot;text-align:center&quot;&gt;Isis farmhouse - Iffley Lock&lt;/h3&gt;&lt;/a&gt;
+&lt;img class=&quot;left&quot; src=&quot;/images/blog/pubs/isis3.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;p&gt;
+You cannot miss this pub during your riverside walk (or ride) southward along the Isis since it's the first pub you'll reach, followed by the &lt;a href=&quot;https://www.chefandbrewer.com/pubs/oxfordshire/kings-arms/?utm_source=g_places&amp;amp;utm_medium=locations&amp;amp;utm_campaign=&quot;&gt;Kings arms&lt;/a&gt;.
+Just over a mile south of Oxford City Centre, it's huge garden will delight everyone, from families to lonely readers.
+I highly recommend the weekly gypsy and swing jazz concerts on most Sunday mid-afternoon.
+Seating next to the fireplace while reading a great novel and drinking a pint of ale is the best way to spend a rainy British afternoon!&lt;/p&gt;
+&lt;i class=&quot;address&quot;&gt;Haystacks Corner, The Towing Path, Iffley Lock, Oxford OX4 4EL. &lt;a href=&quot;www.theisisfarmhouse.co.uk/&quot;&gt;www.theisisfarmhouse.co.uk.&lt;/a&gt;&lt;/i&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h3 style=&quot;text-align: center&quot;&gt;Not quite beer gardens, yet...&lt;/h3&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;pub&quot;&gt;
+&lt;a class=&quot;publink&quot; id=&quot;51.749485000000014%2C-1.2426871999999776&quot; href=&quot;#maps&quot;&gt;&lt;h3 style=&quot;text-align:center&quot;&gt;Kazbar - Cowley&lt;/h3&gt;&lt;/a&gt;
+&lt;img class=&quot;right&quot; src=&quot;/images/blog/pubs/kazbar.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;p&gt;
+Neither a beer garden, nor a pub, yet this address is definitely worth being in this selection!
+As soon as you step your foot into the véranda, the charming North African ambiance shall quickly overwhelmed you! The Spanish cuisine with tapas, sangria and cocktails will bring the experience to its paroxysm. The manager is insanely lively and will speak to you in three or four different languages in the same sentence, don't be surprised, that's the Latin spirit! Take the most of the delicious tapas thanks to the &lt;a href=&quot;http://www.kazbar.co.uk/-Tapas-offer&quot;&gt;half-price discount&lt;/a&gt; (on most of the tapas) from Sunday till Thursday, 5pm till 6pm (need to kindly ask the bartender).&lt;/p&gt;
+&lt;i class=&quot;address&quot;&gt;25-27 Cowley Rd, Oxford OX4 1HP. &lt;a href=&quot;http://www.kazbar.co.uk&quot;&gt;http://www.kazbar.co.uk.&lt;/a&gt;&lt;/i&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;pub&quot;&gt;
+&lt;a class=&quot;publink&quot; id=&quot;51.7528823%2C-1.2536403000000291&quot; href=&quot;#maps&quot;&gt;&lt;h3 style=&quot;text-align:center&quot;&gt;Vault and garden - City center&lt;/h3&gt;&lt;/a&gt;
+&lt;img class=&quot;left&quot; src=&quot;/images/blog/pubs/vault2.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;p&gt;Quite an exotic location since it is situated inside the University Church itself! The terrace overviewing the Radcliffe Camera and All Souls College cannot be more marvellous. It is definitely one of the best place to enjoy a cream tea in Oxford; ask for a Lapsang Souchong (Chinese smoked tea) to go with your (fresh out of the oven) scone - the quintessence of a British spring afternoon!&lt;/p&gt;
+&lt;i class=&quot;address&quot;&gt;1, Radcliffe Square, University Church, Oxford OX1 4AH. &lt;a href=&quot;www.thevaultsandgarden.com&quot;&gt;www.thevaultsandgarden.com&lt;/a&gt;&lt;/i&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;disqus_thread&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'http://emilemathieu.fr';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'svm'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://http-emilemathieu-fr.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+&lt;/script&gt;</content><author><name>Emile Mathieu</name></author><category term="Pub" /><category term="Beer garden" /><category term="Oxford" /><summary type="html">If you are passing by Oxford as a tourist, a visiting student or have already been living there for a while, you cannot miss the enthralling excitement happening around the many bars and pubs scattered in the city. There are especially a significant selection of front and back gardens which offer the perfect place to drink a pint or a glass of Pimm's. I hope you'll love my an hand-curated list of the most thrilling beer gardens one can find in The City of Dreaming Spires!</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://emilemathieu.fr/yolo" /><media:content medium="image" url="https://emilemathieu.fr/yolo" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
