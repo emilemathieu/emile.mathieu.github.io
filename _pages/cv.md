@@ -9,21 +9,26 @@ redirect_from:
 
 {% include base_path %}
 
-Last updated on 2021-01-19
+Last updated on 2021-11-09
 
 [For the pdf version of my curriculum vitae please click here]({{site.baseurl}}/files/CV.pdf).
 
 Education
 ======
-* 2017 - Now: PhD in Machine Learning with Prof. Yee Whye TEH at University of Oxford, Department of Statistics.
+* 2017 - 2021: PhD in Machine Learning with Prof. Yee Whye TEH at University of Oxford, Department of Statistics.
 * 2016 - 2017: MSc (II) in Machine Learning & Computer Vision (MVA) at Ecole Normale Supérieure Paris-Saclay, Paris, passed with honours, Gpa: 4/4.
 * 2014 - 2015: MSc (I) in Mathematics & Computer Science at École des Ponts ParisTech, Paris, Gpa: 3.94/4.
 * 2013 - 2014: BSc in Science (Mathematics, Physics and Computer Science), at École des Ponts ParisTech, Paris, Gpa: 3.86/4.
 * 2011 - 2013: Preparatory classes in Mathematics and Physics, PSI*, Nantes.
 * 2011: Baccalauréat (French secondary school diploma), Nantes, Science major, Mathematics option, passed with honours.
 
-Work experience
+Professional experience
 ======
+
+* Since Autumn 2021: EPSRC Postdoctoral Research Associates
+  * University of Oxford, Mathematical Institute and Department of Statistics.
+  <!-- * Symmetry and Deep generative models. -->
+  * Advisor: Arnaud Doucet.
 
 * Autumn 2019: Research Intern
   * Facebook Artificial Intelligence Research, New York.
@@ -67,6 +72,8 @@ Workshop Co-Organization
 
 Reviewing
 ======
-2020: Neurips, AABI
-2019: ICML, Neurips
-2018: AABI, BDL
+2022: ICLR
+2021: NeurIPS, DGMs @ NeurIPS
+2020: NeurIPS, AABI
+2019: ICML, NeurIPS
+2018: AABI, BDL @ NeurIPS
