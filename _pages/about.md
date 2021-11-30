@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-I'm an EPSRC Postdoctoral Research Associates at the University of Oxford affiliated with the [Department of Statistics](https://www.stats.ox.ac.uk/), and part of the [Oxford Statistical Machine Learning Group](http://csml.stats.ox.ac.uk/learning/), working with [Pr Arnaud Doucet](https://www.stats.ox.ac.uk/~doucet/) and [Pr Yee Whye Teh](https://www.stats.ox.ac.uk/~teh/index.html).
+I'm an EPSRC Postdoctoral Research Associate at the University of Oxford affiliated with the [Department of Statistics](https://www.stats.ox.ac.uk/), and part of the [Oxford Statistical Machine Learning Group](http://csml.stats.ox.ac.uk/learning/), working with [Pr Arnaud Doucet](https://www.stats.ox.ac.uk/~doucet/) and [Pr Yee Whye Teh](https://www.stats.ox.ac.uk/~teh/index.html).
 
 My research interests centre around deep probabilistic machine learning, geometry and invariance.
 <!-- I am most interested in developing probabilistic machine learning models and incorporating inductive biases such as geometry and symmetry. -->
