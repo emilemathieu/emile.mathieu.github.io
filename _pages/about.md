@@ -10,7 +10,7 @@ redirect_from:
 
 I'm an EPSRC Postdoctoral Research Associate at the University of Oxford affiliated with the [Department of Statistics](https://www.stats.ox.ac.uk/), and part of the [Oxford Statistical Machine Learning Group](http://csml.stats.ox.ac.uk/learning/), working with [Pr Arnaud Doucet](https://www.stats.ox.ac.uk/~doucet/) and [Pr Yee Whye Teh](https://www.stats.ox.ac.uk/~teh/index.html).
 
-My research interests centre around deep probabilistic machine learning, geometry and invariance.
+My research interests centre around deep probabilistic machine learning, geometry and symmetries.
 <!-- I am most interested in developing probabilistic machine learning models and incorporating inductive biases such as geometry and symmetry. -->
 <!-- My research interests are at the interface of probabilistic machine learning and geometry. -->
 <!-- Recently I have been exploring the use of machine learning for physical science, and consequently the concepts of symmetry/invariance. -->
@@ -25,6 +25,7 @@ I previously studied at [Ecole des Ponts ParisTech in the mathematics and comput
 
 News
 ======
+- Dec 2021. I passed my viva with no correction! I'd like to thank Arnaud Doucet and Max Welling for putting the effort to be my examinors.
 - Sept 2021. Thesis submitted! Other great news, our work with Adam Foster [On Contrastive Representations of Stochastic Processes](http://arxiv.org/abs/2106.10052) has been accepted at NeurIPS 2021.
 - August 2021. Starting a new postdoctoral position in the same great [OxCSML](http://csml.stats.ox.ac.uk/learning/) research group, under the advisory of [Pr Arnaud Doucet](https://www.stats.ox.ac.uk/~doucet/).
 - Dec 2020. I’m co-organizing the first [Differential Geometry meets Deep Learning](https://sites.google.com/view/diffgeo4dl/) workshop, and we have our paper [Riemannian Continuous Normalizing Flows](https://arxiv.org/abs/2006.10605) accepted at the [Conference on Neural Information Processing Systems (NeurIPS) 2020](https://neurips.cc).
