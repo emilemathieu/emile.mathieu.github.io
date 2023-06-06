@@ -47,6 +47,10 @@ html[data-theme="dark"] {
   box-shadow: inset -10px -8px 1px 1px #fff;
 }
 
+a {
+    text-decoration: none;
+}
+
 // [class*=text-] {
 //   transition: color 500ms ease-in;
 // }
