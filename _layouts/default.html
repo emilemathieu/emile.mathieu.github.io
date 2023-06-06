@@ -7,6 +7,7 @@ layout: compress
 <!doctype html>
 <html lang="{{ site.locale | slice: 0,2 }}" class="no-js">
   <head>
+    <script src="{{ base.url | prepend: site.url }}/assets/js/theme-checker.js"></script>
     {% include head.html %}
     {% include head/custom.html %}
   </head>
@@ -28,4 +29,5 @@ layout: compress
     {% include scripts.html %}
 
   </body>
+  <script src="{{ base.url | prepend: site.url }}/assets/js/mode-switcher.js"></script>
 </html>

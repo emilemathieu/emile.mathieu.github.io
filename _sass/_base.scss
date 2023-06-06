@@ -1,3 +1,56 @@
+html[data-theme="light"] {
+  // --light-text-color: hsl(0, 0%, 35%);
+  --body-link-color: #AC3B61;
+  --primary-color: hsl(0, 0%, 35%);
+  --background-color: hsl(0, 5%, 95%);
+  --text-color: hsl(0, 0%, 0%);
+  --footer-bg: hsl(0, 5%, 95%);
+}
+
+html[data-theme="dark"] {
+  // --light-text-color: hsl(0, 0%, 60%);
+  --body-link-color: #FFCCBB;
+  --primary-color: hsl(0, 0%, 60%);
+  --background-color: hsl(0, 0%, 10%);
+  --text-color: hsl(0, 10%, 80%);
+  --footer-bg: hsl(0, 0%, 10%);
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    content: "dark";
+  }
+}
+
+#theme-toggle {
+  visibility: hidden;
+}
+
+#theme-toggle+label {
+  content: '';
+  display: inline-block;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+  margin-bottom: 0;
+}
+
+#theme-toggle:checked+label {
+  background-color: gold;
+}
+
+#theme-toggle:not(:checked)+label {
+  background-color: transparent;
+  // box-shadow: inset -18px -16px 1px 1px #fff;
+  box-shadow: inset -10px -8px 1px 1px #fff;
+}
+
+// [class*=text-] {
+//   transition: color 500ms ease-in;
+// }
+
 /* ==========================================================================
    BASE ELEMENTS
    ========================================================================== */
@@ -11,9 +64,12 @@ body {
   margin: 0;
   padding: 0;
   padding-bottom: 9em;
-  color: $text-color;
+  // color: $text-color;
+  color: var(--text-color);
   font-family: $global-font-family;
   line-height: 1.5;
+  background-color: var(--background-color);
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 
   &.overflow--hidden {
     /* when primary navigation is visible, the content in the background won't scroll */
