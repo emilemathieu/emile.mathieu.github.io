@@ -9,7 +9,7 @@
 locale                   : "en-UK"
 title                    : "Emile Mathieu"
 title_separator          : "-"
-name                     : &name "Your Name"
+name                     : &name "Emile Mathieu"
 description              : &description "personal description"
 url                      : https://emilemathieu.fr # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
@@ -81,9 +81,9 @@ analytics:
 # Site Author
 author:
   name             : "Emile Mathieu"
-  avatar           : "profile.jpg"
-  bio              : "EPSRC Postdoctoral Researcher"
-  location         : "Oxford, UK"
+  avatar           : "profile2.jpg"
+  bio              : "Postdoctoral Researcher Associate"
+  location         : "Cambridge, UK"
   employer         :
   pubmed           : #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : "https://scholar.google.com/citations?user=g9BjTqgAAAAJ"
@@ -266,6 +266,7 @@ plugins:
   - jekyll-feed
   - jekyll-redirect-from
   - jekyll-scholar
+  # - jekyll-target-blank
 # mimic GitHub Pages with --safe
 whitelist:
   - jekyll-paginate

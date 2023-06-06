@@ -8,27 +8,34 @@ redirect_from:
   - /about.html
 ---
 
-I'm an EPSRC Postdoctoral Research Associate at the University of Oxford affiliated with the [Department of Statistics](https://www.stats.ox.ac.uk/), and part of the [Oxford Statistical Machine Learning Group](http://csml.stats.ox.ac.uk/learning/), working with [Pr Arnaud Doucet](https://www.stats.ox.ac.uk/~doucet/) and [Pr Yee Whye Teh](https://www.stats.ox.ac.uk/~teh/index.html).
+I am a Postdoctoral Research Associate in the [Cambridge Machine Learning Group](http://mlg.eng.cam.ac.uk){:target="_blank"}, part of the Prosperity grant led by [Prof Richard Turner](http://cbl.eng.cam.ac.uk/Public/Turner/Turner){:target="_blank"} and [Prof José Miguel Hernández-Lobato](https://jmhl.org), and in partnership with Microsoft Research. 
 
-My research interests centre around deep probabilistic machine learning, geometry and symmetries.
+My research interests centre around deep probabilistic machine learning with a focus on encoding problem symmetries and geometrical constraints, with application to the natural sciences.
 <!-- I am most interested in developing probabilistic machine learning models and incorporating inductive biases such as geometry and symmetry. -->
 <!-- My research interests are at the interface of probabilistic machine learning and geometry. -->
 <!-- Recently I have been exploring the use of machine learning for physical science, and consequently the concepts of symmetry/invariance. -->
 
-Previously, I was a DPhil candidate in the same research group, supervised by [Pr Yee Whye Teh](https://www.stats.ox.ac.uk/~teh/index.html) an [Ryota Tomioka](https://www.microsoft.com/en-us/research/people/ryoto/) from Microsoft Research.
-Prior to that, I was a graduate enrolled in the [Mathematiques, Vision, Learning (MVA) master at Ecole Normale Supérieure Paris-Saclay](http://math.ens-paris-saclay.fr/version-francaise/formations/master-mva/), with an emphasis on machine learning.
+Previously I was an EPSRC Postdoctoral Research Associate at the University of Oxford affiliated with the [Department of Statistics](https://www.stats.ox.ac.uk/){:target="_blank"}, and part of the [Oxford Statistical Machine Learning Group](http://csml.stats.ox.ac.uk/learning/){:target="_blank"}, working with [Pr Arnaud Doucet](https://www.stats.ox.ac.uk/~doucet/){:target="_blank"} and [Pr Yee Whye Teh](https://www.stats.ox.ac.uk/~teh/index.html){:target="_blank"}.
+Previous to that, I was a DPhil candidate in the same research group, supervised by [Pr Yee Whye Teh](https://www.stats.ox.ac.uk/~teh/index.html){:target="_blank"} an [Ryota Tomioka](https://www.microsoft.com/en-us/research/people/ryoto/){:target="_blank"} from Microsoft Research.
+Prior to that, I was a graduate enrolled in the [Mathematiques, Vision, Learning (MVA) master at Ecole Normale Supérieure Paris-Saclay](http://math.ens-paris-saclay.fr/version-francaise/formations/master-mva/){:target="_blank"}, with an emphasis on machine learning.
 <!-- Prior to that, I worked for Criteo as a data scientist intern, where I improved predictive bidding models. -->
-I previously studied at [Ecole des Ponts ParisTech in the mathematics and computer science department](http://www.enpc.fr/ingenierie-mathematique-et-informatique/).
+I previously studied at [Ecole des Ponts ParisTech in the mathematics and computer science department](http://www.enpc.fr/ingenierie-mathematique-et-informatique/){:target="_blank"}.
 <!-- , where I spent two years. -->
 
 <!-- I am supported by the European Research Council under the European Union’s Seventh Framework Programme (FP7/2007–2013) / ERC grant agreement no. 617071, and by Microsoft Research through its PhD Scholarship Programme.  -->
 
 News
 ======
+- May 2023. Recent work on protein design with diffusion models I'm excited about!
+  - [SE(3) Diffusion Model with Application to Protein Backbone Generation](http://arxiv.org/abs/2302.02277){:target="_blank"} ,
+  - [Broadly Applicable and Accurate Protein Design by Integrating Structure Prediction Networks and Diffusion Generative Models](https://www.biorxiv.org/content/10.1101/2022.12.09.519842v1){:target="_blank"},
+  - and [Diffusion Models for Constrained Domains](https://arxiv.org/abs/2304.05364){:target="_blank"}.
+- October 2022. Our work [Riemannian Score-Based Generative Modeling](https://arxiv.org/abs/2202.02763){:target="_blank"} where we extend score-based diffusion models to a broad class of manifolds has been accepted @ Neurips 2022 as an [`oustanding paper'](https://blog.neurips.cc/2022/11/21/announcing-the-neurips-2022-awards/){:target="_blank"} :)
+- June 2022. I'm joining the [Cambridge Machine Learning Group](http://mlg.eng.cam.ac.uk){:target="_blank"} as Postdoctoral Research Associate! Excited to work with [Prof Richard Turner](http://cbl.eng.cam.ac.uk/Public/Turner/Turner){:target="_blank"} and [Prof José Miguel Hernández-Lobato](https://jmhl.org){:target="_blank"}.
 - Dec 2021. I passed my viva with no correction! I'd like to thank Arnaud Doucet and Max Welling for putting the effort to be my examinors.
-- Sept 2021. Thesis submitted! Other great news, our work with Adam Foster [On Contrastive Representations of Stochastic Processes](http://arxiv.org/abs/2106.10052) has been accepted at NeurIPS 2021.
-- August 2021. Starting a new postdoctoral position in the same great [OxCSML](http://csml.stats.ox.ac.uk/learning/) research group, under the advisory of [Pr Arnaud Doucet](https://www.stats.ox.ac.uk/~doucet/).
-- Dec 2020. I’m co-organizing the first [Differential Geometry meets Deep Learning](https://sites.google.com/view/diffgeo4dl/) workshop, and we have our paper [Riemannian Continuous Normalizing Flows](https://arxiv.org/abs/2006.10605) accepted at the [Conference on Neural Information Processing Systems (NeurIPS) 2020](https://neurips.cc).
+- Sept 2021. Thesis submitted! Other great news, our work with Adam Foster [On Contrastive Representations of Stochastic Processes](http://arxiv.org/abs/2106.10052){:target="_blank"} has been accepted at NeurIPS 2021.
+- August 2021. Starting a new postdoctoral position in the same great [OxCSML](http://csml.stats.ox.ac.uk/learning/){:target="_blank"} research group, under the advisory of [Pr Arnaud Doucet](https://www.stats.ox.ac.uk/~doucet/){:target="_blank"}.
+- Dec 2020. I’m co-organizing the first [Differential Geometry meets Deep Learning](https://sites.google.com/view/diffgeo4dl/){:target="_blank"}workshop, and we have our paper [Riemannian Continuous Normalizing Flows](https://arxiv.org/abs/2006.10605){:target="_blank"} accepted at the [Conference on Neural Information Processing Systems (NeurIPS) 2020](https://neurips.cc){:target="_blank"}.
 - July 2020. I passed my confirmation of status (last step before the PhD submission).
 - Sept 2019. I'm starting an internship at FAIR New York with Max Nickel :)
 

@@ -72,7 +72,7 @@ Workshop Co-Organization
 
 Reviewing
 ======
-2022: ICLR
+2022: ICLR (*Highlighted Reviewer*)
 2021: NeurIPS, DGMs @ NeurIPS
 2020: NeurIPS, AABI
 2019: ICML, NeurIPS
