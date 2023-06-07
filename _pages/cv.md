@@ -9,13 +9,13 @@ redirect_from:
 
 {% include base_path %}
 
-Last updated on 2021-11-09
+Last updated on 07/06/2023
 
-[For the pdf version of my curriculum vitae please click here]({{site.baseurl}}/files/CV.pdf).
+[For the pdf version of my curriculum vitae please click here](https://www.overleaf.com/read/nhpcnnzqhwtx).
 
 Education
 ======
-* 2017 - 2021: PhD in Machine Learning with Prof. Yee Whye TEH at University of Oxford, Department of Statistics.
+* 2017 - 2021: PhD in Machine Learning with Prof. Yee Whye Teh at University of Oxford, Department of Statistics.
 * 2016 - 2017: MSc (II) in Machine Learning & Computer Vision (MVA) at Ecole Normale Supérieure Paris-Saclay, Paris, passed with honours, Gpa: 4/4.
 * 2014 - 2015: MSc (I) in Mathematics & Computer Science at École des Ponts ParisTech, Paris, Gpa: 3.94/4.
 * 2013 - 2014: BSc in Science (Mathematics, Physics and Computer Science), at École des Ponts ParisTech, Paris, Gpa: 3.86/4.
@@ -25,7 +25,11 @@ Education
 Professional experience
 ======
 
-* Since Autumn 2021: EPSRC Postdoctoral Research Associates
+* Since Jul 2022: Postdoctoral Research Associate
+  * University of Cambridge, Department of Engineering.
+  * Advisor: Richard Turner and José Miguel Hernández-Lobato.
+
+* Aug 2021 - Jul 2022: EPSRC Postdoctoral Research Associate
   * University of Oxford, Mathematical Institute and Department of Statistics.
   <!-- * Symmetry and Deep generative models. -->
   * Advisor: Arnaud Doucet.

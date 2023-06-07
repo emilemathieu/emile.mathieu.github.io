@@ -10,11 +10,6 @@ redirect_from:
 
 I am a Postdoctoral Research Associate in the [Cambridge Machine Learning Group](http://mlg.eng.cam.ac.uk){:target="_blank"}, part of the Prosperity grant led by [Prof Richard Turner](http://cbl.eng.cam.ac.uk/Public/Turner/Turner){:target="_blank"} and [Prof José Miguel Hernández-Lobato](https://jmhl.org), and in partnership with Microsoft Research. 
 
-My research interests centre around deep probabilistic machine learning with a focus on encoding problem symmetries and geometrical constraints, with application to the natural sciences.
-<!-- I am most interested in developing probabilistic machine learning models and incorporating inductive biases such as geometry and symmetry. -->
-<!-- My research interests are at the interface of probabilistic machine learning and geometry. -->
-<!-- Recently I have been exploring the use of machine learning for physical science, and consequently the concepts of symmetry/invariance. -->
-
 Previously I was an EPSRC Postdoctoral Research Associate at the University of Oxford affiliated with the [Department of Statistics](https://www.stats.ox.ac.uk/){:target="_blank"}, and part of the [Oxford Statistical Machine Learning Group](http://csml.stats.ox.ac.uk/learning/){:target="_blank"}, working with [Pr Arnaud Doucet](https://www.stats.ox.ac.uk/~doucet/){:target="_blank"} and [Pr Yee Whye Teh](https://www.stats.ox.ac.uk/~teh/index.html){:target="_blank"}.
 Previous to that, I was a DPhil candidate in the same research group, supervised by [Pr Yee Whye Teh](https://www.stats.ox.ac.uk/~teh/index.html){:target="_blank"} an [Ryota Tomioka](https://www.microsoft.com/en-us/research/people/ryoto/){:target="_blank"} from Microsoft Research.
 Prior to that, I was a graduate enrolled in the [Mathematiques, Vision, Learning (MVA) master at Ecole Normale Supérieure Paris-Saclay](http://math.ens-paris-saclay.fr/version-francaise/formations/master-mva/){:target="_blank"}, with an emphasis on machine learning.
@@ -23,6 +18,13 @@ I previously studied at [Ecole des Ponts ParisTech in the mathematics and comput
 <!-- , where I spent two years. -->
 
 <!-- I am supported by the European Research Council under the European Union’s Seventh Framework Programme (FP7/2007–2013) / ERC grant agreement no. 617071, and by Microsoft Research through its PhD Scholarship Programme.  -->
+
+Interests
+======
+My research interests centre around deep probabilistic machine learning with a focus on encoding problem symmetries and geometrical constraints, with application to the natural sciences, in particular to molecular science and weather science.
+<!-- I am most interested in developing probabilistic machine learning models and incorporating inductive biases such as geometry and symmetry. -->
+<!-- My research interests are at the interface of probabilistic machine learning and geometry. -->
+<!-- Recently I have been exploring the use of machine learning for physical science, and consequently the concepts of symmetry/invariance. -->
 
 News
 ======
