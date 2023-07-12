@@ -28,10 +28,10 @@ My research interests centre around deep probabilistic machine learning with a f
 
 News
 ======
-- May 2023. Recent work on protein design with diffusion models I'm excited about!
-  - [SE(3) Diffusion Model with Application to Protein Backbone Generation](http://arxiv.org/abs/2302.02277){:target="_blank"} ,
-  - [Broadly Applicable and Accurate Protein Design by Integrating Structure Prediction Networks and Diffusion Generative Models](https://www.biorxiv.org/content/10.1101/2022.12.09.519842v1){:target="_blank"},
-  - and [Diffusion Models for Constrained Domains](https://arxiv.org/abs/2304.05364){:target="_blank"}.
+- May-July 2023. Recent work on protein design with diffusion models I'm really excited about!
+  - Accepted to ICML: [SE(3) Diffusion Model with Application to Protein Backbone Generation](http://arxiv.org/abs/2302.02277){:target="_blank"},
+  - Accepted to Nature: [Broadly Applicable and Accurate Protein Design by Integrating Structure Prediction Networks and Diffusion Generative Models](https://www.nature.com/articles/s41586-023-06415-8){:target="_blank"},
+  - Accepted to TMLR: [Diffusion Models for Constrained Domains](https://arxiv.org/abs/2304.05364){:target="_blank"} and follow up work [Metropolis Sampling for Constrained Diffusion Models](http://arxiv.org/abs/2307.05439){:target="_blank"}.
 - October 2022. Our work [Riemannian Score-Based Generative Modeling](https://arxiv.org/abs/2202.02763){:target="_blank"} where we extend score-based diffusion models to a broad class of manifolds has been accepted @ Neurips 2022 as an [`oustanding paper'](https://blog.neurips.cc/2022/11/21/announcing-the-neurips-2022-awards/){:target="_blank"} :)
 - June 2022. I'm joining the [Cambridge Machine Learning Group](http://mlg.eng.cam.ac.uk){:target="_blank"} as Postdoctoral Research Associate! Excited to work with [Prof Richard Turner](http://cbl.eng.cam.ac.uk/Public/Turner/Turner){:target="_blank"} and [Prof José Miguel Hernández-Lobato](https://jmhl.org){:target="_blank"}.
 - Dec 2021. I passed my viva with no correction! I'd like to thank Arnaud Doucet and Max Welling for putting the effort to be my examinors.
