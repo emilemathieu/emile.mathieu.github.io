@@ -5,6 +5,7 @@ permalink: /teaching/
 author_profile: true
 ---
 
+- Summer 2024, Guest Lecture, [ELLIS Summer School, University of Cambridge](https://www.ellis.eng.cam.ac.uk/summer-school/).
 - Winter 2023, Guest Lecture, [MLMI4 (Advanced Machine Learning), Dpt of Engineering, University of Cambridge](https://www.mlmi.eng.cam.ac.uk/mlmi-4-advanced-machine-learning).
 - Winter 2022, Tutor, [SC4 Advanced Topics in Statistical Machine Learning, Dpt of Statistics, University of Oxford](https://www.cs.ox.ac.uk/teaching/courses/2019-2020/advml/).
 - Autumn 2021, Tutor, [SB2.1 Foundations of Statistical Inference, Dpt of Statistics, University of Oxford](http://www.stats.ox.ac.uk/~sejdinov/teaching/fosi19/).

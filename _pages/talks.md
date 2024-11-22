@@ -5,6 +5,7 @@ permalink: /talks/
 author_profile: true
 ---
 
+- 22/11/2024: [Introduction to flow matching](https://drive.google.com/file/d/1aCK38wW8KWT3Osif7gaSwRfeG5QE-c8S/view?usp=share_link){:target="_blank"}, [Samsung AI Centre](https://research.samsung.com/aicenter_cambridge){:target="_blank"}, Cambridge.
 - 29/05/2023: [Geometric neural diffusion processes](https://drive.google.com/file/d/1k232KY7Z9lvJLMzvAD2c-2B0cFj_5OBM/view?usp=share_link){:target="_blank"}, [Youth in High-Dimensions](https://indico.ictp.it/event/9596/){:target="_blank"}, ICTP, Trieste.
 - 15/12/2022: [Score-based Generative Models on Riemannian manifolds](https://drive.google.com/file/d/1KNWLClAkBimaTnLGY-Fk0i0UEicQrDI3/view?usp=share_link){:target="_blank"}, [Seminar on Advances in Probabilistic Machine Learning](https://aaltoml.github.io/apml/){:target="_blank"}, Aalto University and ELLIS unit Helsinki.
 - 8/12/2022: [Score-based Generative Models on Riemannian manifolds](https://drive.google.com/file/d/1KNWLClAkBimaTnLGY-Fk0i0UEicQrDI3/view?usp=share_link){:target="_blank"}, [NeurIPS 2022 @ Cambridge Meet-up](https://www.neuripsmeetupcambridge.info){:target="_blank"}, University of Cambridge.

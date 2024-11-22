@@ -9,7 +9,7 @@ redirect_from:
 
 {% include base_path %}
 
-Last updated on 07/06/2023
+Last updated on November 2024
 
 [For the pdf version of my curriculum vitae please click here](https://www.overleaf.com/read/nhpcnnzqhwtx).
 
@@ -25,9 +25,14 @@ Education
 Professional experience
 ======
 
-* Since Jul 2022: Postdoctoral Research Associate
+* Since Feb 2024: Machine Learning Research Scientist
+  * Xaira Therapeutics, London.
+  * Generative models for protein design.
+
+* Jul 2022 - Feb 2024: Postdoctoral Research Associate
   * University of Cambridge, Department of Engineering.
   * Advisor: Richard Turner and José Miguel Hernández-Lobato.
+  * Worked on diffusion models and flow matching for natural science applications.
 
 * Aug 2021 - Jul 2022: EPSRC Postdoctoral Research Associate
   * University of Oxford, Mathematical Institute and Department of Statistics.

@@ -7,9 +7,10 @@ redirect_from:
   - /about/
   - /about.html
 ---
+I am now a  Machine Learning Research Scientist at [Xaira Therapeutics](https://xaira.com), based in the London office, working with [Joseph Watson](https://scholar.google.com/citations?user=LZqtHXoAAAAJ&hl=en), [Tor  Fjelde](https://retiredparkingguard.com/about.html), [Francisco Vargas](https://mlatcl.github.io/people/francisco-vargas.html) and [Justin Barton](https://scholar.google.com/citations?user=rqbk7ezKqosC&hl=en). We are developing and training generative models for antibody design.
 
-I am a Postdoctoral Research Associate in the [Cambridge Machine Learning Group](http://mlg.eng.cam.ac.uk){:target="_blank"}, part of the Prosperity grant led by [Prof Richard Turner](http://cbl.eng.cam.ac.uk/Public/Turner/Turner){:target="_blank"} and [Prof José Miguel Hernández-Lobato](https://jmhl.org), and in partnership with Microsoft Research. 
-
+Before that I was a Postdoctoral Research Associate in the [Cambridge Machine Learning Group](http://mlg.eng.cam.ac.uk){:target="_blank"}, part of the Prosperity grant led by [Prof Richard Turner](http://cbl.eng.cam.ac.uk/Public/Turner/Turner){:target="_blank"} and [Prof José Miguel Hernández-Lobato](https://jmhl.org), and in partnership with Microsoft Research. 
+<!--  -->
 Previously I was an EPSRC Postdoctoral Research Associate at the University of Oxford affiliated with the [Department of Statistics](https://www.stats.ox.ac.uk/){:target="_blank"}, and part of the [Oxford Statistical Machine Learning Group](http://csml.stats.ox.ac.uk/learning/){:target="_blank"}, working with [Pr Arnaud Doucet](https://www.stats.ox.ac.uk/~doucet/){:target="_blank"} and [Pr Yee Whye Teh](https://www.stats.ox.ac.uk/~teh/index.html){:target="_blank"}.
 Previous to that, I was a DPhil candidate in the same research group, supervised by [Pr Yee Whye Teh](https://www.stats.ox.ac.uk/~teh/index.html){:target="_blank"} an [Ryota Tomioka](https://www.microsoft.com/en-us/research/people/ryoto/){:target="_blank"} from Microsoft Research.
 Prior to that, I was a graduate enrolled in the [Mathematiques, Vision, Learning (MVA) master at Ecole Normale Supérieure Paris-Saclay](http://math.ens-paris-saclay.fr/version-francaise/formations/master-mva/){:target="_blank"}, with an emphasis on machine learning.
@@ -21,13 +22,17 @@ I previously studied at [Ecole des Ponts ParisTech in the mathematics and comput
 
 Interests
 ======
-My research interests centre around deep probabilistic machine learning with a focus on encoding problem symmetries and geometrical constraints, with application to the natural sciences, in particular to molecular science and weather science.
+My research interests centre around `Generative AI' for the Natural Sciences, with a focus on encoding problem symmetries and geometrical constraints.
+I am particularly interested in molecular science and weather science.
+<!-- with a focus on encoding problem symmetries and geometrical constraints, with application to the natural sciences, in particular to molecular science and weather science. -->
 <!-- I am most interested in developing probabilistic machine learning models and incorporating inductive biases such as geometry and symmetry. -->
 <!-- My research interests are at the interface of probabilistic machine learning and geometry. -->
 <!-- Recently I have been exploring the use of machine learning for physical science, and consequently the concepts of symmetry/invariance. -->
 
 News
 ======
+- February 2024. I've joined [Xaira Therapeutics](https://xaira.com) as a Machine Learning Research Scientist in London, working with [Joseph Watson](https://scholar.google.com/citations?user=LZqtHXoAAAAJ&hl=en)on developing generative models for antibody design. Looking forward to making new therapeutics!
+- January 2024. With my friends Tor and Vincent we wrote a short-ish [blog post](https://mlg.eng.cam.ac.uk/blog/2024/01/20/flow-matching.html) introducing flow matching, from a normalising flow perspective. Hope it'll be useful!
 - May-July 2023. Recent work on protein design with diffusion models I'm really excited about!
   - Accepted to ICML: [SE(3) Diffusion Model with Application to Protein Backbone Generation](http://arxiv.org/abs/2302.02277){:target="_blank"},
   - Accepted to Nature: [Broadly Applicable and Accurate Protein Design by Integrating Structure Prediction Networks and Diffusion Generative Models](https://www.nature.com/articles/s41586-023-06415-8){:target="_blank"},
